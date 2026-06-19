@@ -3,5 +3,31 @@ dist
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
+.env.staging
 *.log
 .DS_Store
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite
+.vite/
+
+# Claude Code (local)
+.claude/settings.local.json
+.claude/agent-memory/
+
+# Supabase (local)
+supabase/.branches/
+supabase/.temp/
+
+# Generated reports
+CODE_REVIEW_REPORT.md
+
+# Planning artifacts (local only)
+plan-phase1.md
+plan-phase2.md
+plan-phase3.md
+plan-phase4.md
