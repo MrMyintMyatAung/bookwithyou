@@ -1,0 +1,10 @@
+# Supabase project configuration
+# Project: ogyucvkubmicmlbhlawx (BooksWithYou)
+# Managed via `supabase link` + `supabase db push`
+project_id = "ogyucvkubmicmlbhlawx"
+
+[db]
+port = 5432
+
+[auth]
+enable_signup = true
