@@ -9,6 +9,7 @@ import { Card } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Spinner } from "../../components/ui/spinner";
+import { Bookshelf } from "../../components/profile/bookshelf";
 
 function SessionLink({
   id,
@@ -138,6 +139,11 @@ function OwnProfileContent() {
           </div>
         )}
       </Card>
+
+      {/* Personal bookshelf */}
+      <div className="mb-8">
+        <Bookshelf />
+      </div>
 
       {/* My sessions */}
       <Card className="p-6 sm:p-8">
