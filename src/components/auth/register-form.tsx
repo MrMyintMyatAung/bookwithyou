@@ -68,7 +68,7 @@ export function RegisterForm() {
       password,
       options: {
         data: { username: username.trim() },
-        emailRedirectTo: `${window.location.origin}/bookwithyou/confirmed.html`,
+        emailRedirectTo: `${window.location.origin}/bookwithyou/#/confirmed`,
       },
     });
 
