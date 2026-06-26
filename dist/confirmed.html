@@ -26,6 +26,7 @@
     p { font-size: 0.9rem; color: #94a3b8; margin: 0.5rem 0; }
     .error h1 { color: #f87171; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
   <div id="status" class="card">
@@ -34,81 +35,73 @@
     <p>Please wait while we verify your account.</p>
   </div>
 
-  <script type="module">
-    // We load supabase-js from CDN to keep this page fully self-contained
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  <script>
+    (async function() {
+      var SUPABASE_URL = "https://ogyucvkubmicmlbhlawx.supabase.co";
+      var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9neXVjdmt1Ym1pY21sYmhsYXd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4Mzk3NDgsImV4cCI6MjA5NzQxNTc0OH0.jDBSKPO4Ym6qADRKhQTptLA18s4MKJj9Eu74lUk3fkY";
+      var APP_URL = "https://mrmyintmyataung.github.io/bookwithyou/";
 
-    const SUPABASE_URL = "https://ogyucvkubmicmlbhlawx.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9neXVjdmt1Ym1pY21sYmhsYXd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4Mzk3NDgsImV4cCI6MjA5NzQxNTc0OH0.jDBSKPO4Ym6qADRKhQTptLA18s4MKJj9Eu74lUk3fkY";
-    const APP_URL = "https://mrmyintmyataung.github.io/bookwithyou/";
+      var statusEl = document.getElementById("status");
 
-    const status = document.getElementById("status");
+      function showSuccess() {
+        statusEl.innerHTML =
+          '<div style="font-size:2.5rem;margin-bottom:0.75rem;">&#9989;</div>' +
+          '<h1>Email confirmed!</h1>' +
+          '<p>Your account is ready. Redirecting you to the app…</p>';
+      }
 
-    function showSuccess() {
-      status.innerHTML = `
-        <div style="font-size:2.5rem;margin-bottom:0.75rem;">✅</div>
-        <h1>Email confirmed!</h1>
-        <p>Your account is ready. Redirecting you to the app…</p>
-      `;
-    }
+      function showError(msg) {
+        statusEl.className = "card error";
+        statusEl.innerHTML =
+          '<div style="font-size:2.5rem;margin-bottom:0.75rem;">&#9888;&#65039;</div>' +
+          '<h1>Something went wrong</h1>' +
+          '<p>' + (msg || "Could not confirm your email.") + '</p>' +
+          '<p style="margin-top:1rem;"><a href="' + APP_URL + '#/login" style="color:#f97316;">Go to sign in</a></p>';
+      }
 
-    function showError(msg) {
-      status.classList.add("error");
-      status.innerHTML = `
-        <div style="font-size:2.5rem;margin-bottom:0.75rem;">⚠️</div>
-        <h1>Something went wrong</h1>
-        <p>${msg || "Could not confirm your email."}</p>
-        <p style="margin-top:1rem;">
-          <a href="${APP_URL}#/login" style="color:#f97316;">Go to sign in</a>
-        </p>
-      `;
-    }
-
-    try {
-      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: {
-          autoRefreshToken: true,
-          persistSession: true,
-          detectSessionInUrl: true,
-          flowType: "pkce",
-        },
-      });
-
-      // Supabase delivers tokens as hash params: #access_token=...&refresh_token=...&type=signup
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-
-      const accessToken = params.get("access_token");
-      const refreshToken = params.get("refresh_token");
-      const type = params.get("type");
-
-      if (accessToken && refreshToken) {
-        const { error } = await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken,
+      try {
+        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            autoRefreshToken: true,
+            persistSession: true,
+            flowType: "pkce",
+          },
         });
 
-        if (error) throw error;
+        // Supabase delivers tokens as hash params: #access_token=...&refresh_token=...&type=signup
+        var hash = window.location.hash.substring(1);
+        var params = new URLSearchParams(hash);
+        var accessToken = params.get("access_token");
+        var refreshToken = params.get("refresh_token");
+        var type = params.get("type");
 
-        showSuccess();
-        // Redirect to the app after a brief pause
-        setTimeout(() => {
-          window.location.href = APP_URL + "#/confirmed";
-        }, 1500);
-      } else if (type === "recovery") {
-        // Password recovery — redirect to app's reset-password page
-        window.location.href = APP_URL + "#/reset-password#" + hash;
-      } else {
-        // No tokens found — might already be confirmed or direct visit
-        showSuccess();
-        setTimeout(() => {
-          window.location.href = APP_URL + "#/confirmed";
-        }, 1500);
+        if (accessToken && refreshToken) {
+          var result = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+
+          if (result.error) throw result.error;
+
+          showSuccess();
+          setTimeout(function() {
+            window.location.href = APP_URL + "#/confirmed";
+          }, 1500);
+        } else if (type === "recovery") {
+          // Password recovery — redirect to app's reset-password page with tokens
+          window.location.href = APP_URL + "#/reset-password#" + hash;
+        } else {
+          // No tokens — might already be confirmed or direct visit
+          showSuccess();
+          setTimeout(function() {
+            window.location.href = APP_URL + "#/confirmed";
+          }, 1500);
+        }
+      } catch (err) {
+        console.error("Confirmation error:", err);
+        showError(err.message || "Could not confirm your email.");
       }
-    } catch (err) {
-      console.error("Confirmation error:", err);
-      showError(err.message || "Could not confirm your email.");
-    }
+    })();
   </script>
 </body>
 </html>
