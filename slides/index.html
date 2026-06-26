@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BooksWithYou — Product Intro</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 20px; scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #102a43; color: #f1f5f9; line-height: 1.5; }
+
+  .slide {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 3rem 2rem; text-align: center; scroll-snap-align: start;
+    background: linear-gradient(135deg, #0f172a 0%, #102a43 50%, #1e293b 100%);
+  }
+  .slide:nth-child(even) { background: linear-gradient(135deg, #1e293b 0%, #102a43 50%, #0f172a 100%); }
+
+  .badge {
+    display: inline-block; padding: 0.3rem 1rem; border-radius: 999px; font-size: 0.75rem;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;
+    background: rgba(249,115,22,0.15); color: #f97316; border: 1px solid rgba(249,115,22,0.3);
+  }
+
+  h1 { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; }
+  h1 .accent { background: linear-gradient(135deg, #f97316, #f97316, #14b8a6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+  h2 .accent { background: linear-gradient(135deg, #f97316, #14b8a6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+  .subtitle { font-size: 1.1rem; color: #94a3b8; max-width: 600px; margin: 0 auto 2rem; }
+
+  .btn { display: inline-block; padding: 0.75rem 2rem; border-radius: 999px; font-weight: 600;
+         font-size: 0.9rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+  .btn-primary { background: #f97316; color: #fff; }
+  .btn-secondary { background: rgba(255,255,255,0.1); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.15); margin-left: 1rem; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; text-align: left; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; max-width: 960px; text-align: left; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 800px; }
+
+  .card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .card-coral { border-top: 3px solid #f97316; }
+  .card-teal  { border-top: 3px solid #14b8a6; }
+  .card-brand { border-top: 3px solid #3b82f6; }
+
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .card p { font-size: 0.8rem; color: #94a3b8; }
+
+  .stat { font-size: 2rem; font-weight: 900; color: #f97316; }
+  .stat-label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .tech-pill {
+    display: inline-block; padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.8rem;
+    font-weight: 500; margin: 0.3rem;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+  }
+  .tech-pill.highlight { background: rgba(249,115,22,0.15); border-color: rgba(249,115,22,0.3); color: #f97316; }
+
+  .nav-dots { position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.75rem; z-index: 100; }
+  .nav-dots a { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.2s; }
+  .nav-dots a:hover, .nav-dots a:focus { background: #f97316; }
+
+  .logo { font-size: 2rem; font-weight: 900; margin-bottom: 1rem; }
+  .logo .icon { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .slide { padding: 2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-dots" aria-label="Slide navigation">
+  <a href="#title" title="Title"></a>
+  <a href="#problem" title="Problem"></a>
+  <a href="#solution" title="Solution"></a>
+  <a href="#features" title="Features"></a>
+  <a href="#tech" title="Tech Stack"></a>
+  <a href="#cta" title="Get Started"></a>
+</nav>
+
+<!-- Slide 1: Title -->
+<section id="title" class="slide">
+  <div class="logo"><span class="icon">📚</span>BooksWithYou</div>
+  <span class="badge">Product Introduction</span>
+  <h1>A <span class="accent">social reading tracker</span> for book clubs &amp; friends</h1>
+  <p class="subtitle">Create shared reading sessions, log chapter progress together, and discuss books in real time — all in one place.</p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+    <a href="#cta" class="btn btn-primary">Get Started →</a>
+    <a href="#features" class="btn btn-secondary">See Features</a>
+  </div>
+</section>
+
+<!-- Slide 2: Problem -->
+<section id="problem" class="slide">
+  <span class="badge">The Problem</span>
+  <h2>Book clubs are <span class="accent">messy.</span></h2>
+  <div class="grid-2">
+    <div class="card card-coral">
+      <div class="card-icon">📱</div>
+      <h3>Scattered Channels</h3>
+      <p>Group chats, emails, spreadsheets — nobody knows where the reading schedule lives.</p>
+    </div>
+    <div class="card card-teal">
+      <div class="card-icon">❓</div>
+      <h3>No Progress Visibility</h3>
+      <p>Who has caught up? Who fell behind? No easy way to see where everyone is.</p>
+    </div>
+    <div class="card card-brand">
+      <div class="card-icon">😶</div>
+      <h3>Discussion Friction</h3>
+      <p>Great insights get lost in chat scroll. No persistent place to discuss each book.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #fbbf24;">
+      <div class="card-icon">⏰</div>
+      <h3>Accountability Drain</h3>
+      <p>Without visible tracking, reading goals drift and clubs lose momentum.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: Solution -->
+<section id="solution" class="slide">
+  <span class="badge">The Solution</span>
+  <h2>One place to <span class="accent">read together.</span></h2>
+  <p class="subtitle">BooksWithYou brings books, progress tracking, and discussion into a simple, beautiful experience.</p>
+  <div class="grid-3">
+    <div style="text-align:center; padding:1.5rem;">
+      <div style="font-size:2.5rem;margin-bottom:0.5rem;">📖</div>
+      <h3>Create a Session</h3>
+      <p style="font-size:0.8rem;color:#94a3b8;">Pick a book, set chapters, and invite your reading circle.</p>
+    </div>
+    <div style="text-align:center; padding:1.5rem;">
+      <div style="font-size:2.5rem;margin-bottom:0.5rem;">📊</div>
+      <h3>Track Progress</h3>
+      <p style="font-size:0.8rem;color:#94a3b8;">Log chapters as you go. See everyone's progress at a glance.</p>
+    </div>
+    <div style="text-align:center; padding:1.5rem;">
+      <div style="font-size:2.5rem;margin-bottom:0.5rem;">💬</div>
+      <h3>Discuss &amp; React</h3>
+      <p style="font-size:0.8rem;color:#94a3b8;">Share thoughts and react with emojis — live, in real time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Features -->
+<section id="features" class="slide">
+  <span class="badge">Features</span>
+  <h2>Everything your <span class="accent">reading group</span> needs</h2>
+  <div class="grid-4">
+    <div class="card card-coral">
+      <div class="card-icon">🔒</div>
+      <h3>Public &amp; Private Sessions</h3>
+      <p>Open to the world or invite-only — you decide who joins the read.</p>
+    </div>
+    <div class="card card-teal">
+      <div class="card-icon">📑</div>
+      <h3>Chapter-by-Chapter Tracking</h3>
+      <p>Break books into chapters. Log progress with simple +/- controls.</p>
+    </div>
+    <div class="card card-brand">
+      <div class="card-icon">⚡</div>
+      <h3>Live Updates</h3>
+      <p>Progress, comments, and reactions sync instantly via Supabase Realtime.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #a78bfa;">
+      <div class="card-icon">😊</div>
+      <h3>Emoji Reactions</h3>
+      <p>Celebrate milestones and react to comments with one click.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: Tech Stack -->
+<section id="tech" class="slide">
+  <span class="badge">Tech Stack</span>
+  <h2>Built with <span class="accent">modern tools</span></h2>
+  <p class="subtitle">A fast, real-time web app powered by a production-grade stack.</p>
+  <div style="max-width:700px;text-align:center;margin-bottom:2rem;">
+    <span class="tech-pill highlight">React 19</span>
+    <span class="tech-pill highlight">TypeScript</span>
+    <span class="tech-pill highlight">Tailwind CSS 4</span>
+    <span class="tech-pill">Vite 7</span>
+    <span class="tech-pill">React Router 7</span>
+    <span class="tech-pill">TanStack Query 5</span>
+    <span class="tech-pill highlight">Supabase</span>
+    <span class="tech-pill">PostgreSQL</span>
+    <span class="tech-pill">Realtime</span>
+  </div>
+  <div class="grid-3" style="text-align:center;">
+    <div>
+      <div class="stat">7</div>
+      <div class="stat-label">Database Tables</div>
+    </div>
+    <div>
+      <div class="stat">100%</div>
+      <div class="stat-label">Free & Open Source</div>
+    </div>
+    <div>
+      <div class="stat">MIT</div>
+      <div class="stat-label">License</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: CTA -->
+<section id="cta" class="slide">
+  <span class="badge">Get Started</span>
+  <h2><span class="accent">Ready</span> to read together?</h2>
+  <p class="subtitle">Open source. Self-hostable. MIT licensed. Clone and run in minutes.</p>
+
+  <div class="card" style="max-width:600px;text-align:left;margin-bottom:2rem;">
+    <pre style="font-size:0.7rem;color:#e2e8f0;font-family:'JetBrains Mono',monospace;overflow-x:auto;">
+git clone https://github.com/MrMyintMyatAung/bookwithyou.git
+cd bookswithyou
+npm install
+npm run dev</pre>
+  </div>
+
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+    <a href="https://github.com/MrMyintMyatAung/bookwithyou" class="btn btn-primary" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://mrmyintmyataung.github.io/bookwithyou/" class="btn btn-secondary" target="_blank" rel="noopener">🌐 Live Demo</a>
+  </div>
+</section>
+
+</body>
+</html>
