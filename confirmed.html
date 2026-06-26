@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirming your email — BooksWithYou</title>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; margin: 0;
+      background: #0f172a; color: #e2e8f0; text-align: center;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 2.5rem 2rem; max-width: 420px; width: 100%;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #f97316; border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 1.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    h1 { font-size: 1.4rem; margin: 0 0 0.5rem; }
+    p { font-size: 0.9rem; color: #94a3b8; margin: 0.5rem 0; }
+    .error h1 { color: #f87171; }
+  </style>
+</head>
+<body>
+  <div id="status" class="card">
+    <div class="spinner"></div>
+    <h1>Confirming your email…</h1>
+    <p>Please wait while we verify your account.</p>
+  </div>
+
+  <script type="module">
+    // We load supabase-js from CDN to keep this page fully self-contained
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL = "https://ogyucvkubmicmlbhlawx.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9neXVjdmt1Ym1pY21sYmhsYXd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4Mzk3NDgsImV4cCI6MjA5NzQxNTc0OH0.jDBSKPO4Ym6qADRKhQTptLA18s4MKJj9Eu74lUk3fkY";
+    const APP_URL = "https://mrmyintmyataung.github.io/bookwithyou/";
+
+    const status = document.getElementById("status");
+
+    function showSuccess() {
+      status.innerHTML = `
+        <div style="font-size:2.5rem;margin-bottom:0.75rem;">✅</div>
+        <h1>Email confirmed!</h1>
+        <p>Your account is ready. Redirecting you to the app…</p>
+      `;
+    }
+
+    function showError(msg) {
+      status.classList.add("error");
+      status.innerHTML = `
+        <div style="font-size:2.5rem;margin-bottom:0.75rem;">⚠️</div>
+        <h1>Something went wrong</h1>
+        <p>${msg || "Could not confirm your email."}</p>
+        <p style="margin-top:1rem;">
+          <a href="${APP_URL}#/login" style="color:#f97316;">Go to sign in</a>
+        </p>
+      `;
+    }
+
+    try {
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true,
+          flowType: "pkce",
+        },
+      });
+
+      // Supabase delivers tokens as hash params: #access_token=...&refresh_token=...&type=signup
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+
+      const accessToken = params.get("access_token");
+      const refreshToken = params.get("refresh_token");
+      const type = params.get("type");
+
+      if (accessToken && refreshToken) {
+        const { error } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        });
+
+        if (error) throw error;
+
+        showSuccess();
+        // Redirect to the app after a brief pause
+        setTimeout(() => {
+          window.location.href = APP_URL + "#/confirmed";
+        }, 1500);
+      } else if (type === "recovery") {
+        // Password recovery — redirect to app's reset-password page
+        window.location.href = APP_URL + "#/reset-password#" + hash;
+      } else {
+        // No tokens found — might already be confirmed or direct visit
+        showSuccess();
+        setTimeout(() => {
+          window.location.href = APP_URL + "#/confirmed";
+        }, 1500);
+      }
+    } catch (err) {
+      console.error("Confirmation error:", err);
+      showError(err.message || "Could not confirm your email.");
+    }
+  </script>
+</body>
+</html>
