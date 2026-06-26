@@ -14,13 +14,14 @@ A social reading tracker where you can create reading sessions, invite friends, 
 
 ## Screenshots
 
-![Landing page](screenshots/landing.png)
-
-![Sessions](screenshots/sessions.png)
-
-![Session detail](screenshots/session-detail.png)
-
-![Login](screenshots/login.png)
+<p align="center">
+  <img src="screenshots/landing.png" alt="Landing page" width="400" />
+  <img src="screenshots/sessions.png" alt="Session list" width="400" />
+</p>
+<p align="center">
+  <img src="screenshots/session-detail.png" alt="Session detail" width="400" />
+  <img src="screenshots/login.png" alt="Login" width="400" />
+</p>
 
 ## Tech Stack
 
