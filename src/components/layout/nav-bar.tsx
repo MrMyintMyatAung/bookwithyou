@@ -8,7 +8,6 @@ export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close mobile menu on outside click
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e: MouseEvent) => {
@@ -20,7 +19,6 @@ export function NavBar() {
     return () => document.removeEventListener("mousedown", handler);
   }, [menuOpen]);
 
-  // Close mobile menu on Escape
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e: KeyboardEvent) => {
@@ -31,46 +29,51 @@ export function NavBar() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200/60">
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-navy-800/70 border-b border-white/10">
+      <nav className="mx-auto max-w-6xl flex items-center justify-between gap-3 px-5 py-4 sm:px-6">
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 font-bold text-lg text-neutral-900 hover:text-primary-700 transition-colors"
+          className="flex items-center gap-2 text-lg font-black tracking-tight text-white no-underline hover:text-white/90 transition-colors"
         >
-          📚 BooksWithYou
+          <span>Books</span>
+          <span className="text-coral-400">With</span>
+          <span>You</span>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden sm:flex items-center gap-4">
-          <Link to="/sessions">
-            <span className="text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">
-              Sessions
-            </span>
+        <div className="hidden sm:flex items-center gap-6">
+          <Link
+            to="/sessions"
+            className="text-sm font-medium text-navy-200 hover:text-white transition-colors no-underline"
+          >
+            Sessions
           </Link>
           {isLoading ? (
-            <div className="h-8 w-20 bg-neutral-200 rounded-lg animate-pulse" />
+            <div className="h-8 w-20 bg-white/10 rounded-lg animate-pulse" />
           ) : isAuthenticated ? (
             <div className="flex items-center gap-4">
               <Link
                 to="/profile"
-                className="text-sm font-medium text-neutral-700 hover:text-primary-600 transition-colors"
+                className="text-sm font-medium text-navy-200 hover:text-white transition-colors no-underline"
               >
                 {profile?.username ?? "Reader"}
               </Link>
-              <SignOutButton />
+              <SignOutButton className="!text-navy-200 hover:!text-white hover:!bg-white/10" />
             </div>
           ) : (
             <>
-              <Link to="/login">
-                <span className="text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">
-                  Sign In
-                </span>
+              <Link
+                to="/login"
+                className="text-sm font-medium text-navy-200 hover:text-white transition-colors no-underline"
+              >
+                Sign In
               </Link>
-              <Link to="/register">
-                <span className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-xl bg-primary-600 text-white hover:bg-primary-700 transition-colors shadow-sm">
-                  Join
-                </span>
+              <Link
+                to="/register"
+                className="inline-flex items-center rounded-lg bg-coral-500 px-4 py-1.5 text-sm font-bold text-white no-underline hover:bg-coral-600 transition-colors"
+              >
+                Join
               </Link>
             </>
           )}
@@ -79,30 +82,29 @@ export function NavBar() {
         {/* Mobile hamburger */}
         <button
           type="button"
-          className="sm:hidden p-2 rounded-lg text-neutral-600 hover:bg-neutral-100 transition-colors"
+          className="sm:hidden p-2 rounded-md text-navy-200 hover:text-white transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen}
           aria-label="Toggle navigation menu"
         >
           <svg
-            className="h-6 w-6"
+            className="h-5 w-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            strokeWidth={2}
           >
             {menuOpen ? (
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
                 d="M6 18L18 6M6 6l12 12"
               />
             ) : (
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             )}
           </svg>
@@ -113,42 +115,44 @@ export function NavBar() {
       {menuOpen && (
         <div
           ref={menuRef}
-          className="sm:hidden border-t border-neutral-200 bg-white"
+          className="sm:hidden border-t border-white/10"
         >
-          <div className="px-4 py-4 flex flex-col gap-3">
+          <div className="mx-auto max-w-6xl px-5 py-4 flex flex-col gap-1">
             <Link
               to="/sessions"
               onClick={() => setMenuOpen(false)}
-              className="text-sm font-medium text-neutral-700 hover:text-neutral-900 py-1"
+              className="block rounded-lg px-3 py-2.5 text-sm text-navy-200 no-underline hover:bg-white/5 hover:text-white"
             >
               Sessions
             </Link>
             {isLoading ? (
-              <div className="h-8 bg-neutral-200 rounded-lg animate-pulse" />
+              <div className="h-8 bg-white/5 rounded-lg animate-pulse mx-3" />
             ) : isAuthenticated ? (
               <>
                 <Link
                   to="/profile"
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm font-medium text-neutral-700 hover:text-primary-600 py-1"
+                  className="block rounded-lg px-3 py-2.5 text-sm text-navy-200 no-underline hover:bg-white/5 hover:text-white"
                 >
                   {profile?.username ?? "Reader"}
                 </Link>
-                <SignOutButton />
+                <div className="px-3 py-1">
+                  <SignOutButton />
+                </div>
               </>
             ) : (
               <>
                 <Link
                   to="/login"
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm font-medium text-neutral-700 hover:text-neutral-900 py-1"
+                  className="block rounded-lg px-3 py-2.5 text-sm text-navy-200 no-underline hover:bg-white/5 hover:text-white"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl bg-primary-600 text-white hover:bg-primary-700 transition-colors"
+                  className="block rounded-lg px-3 py-2.5 text-sm font-bold text-coral-400 no-underline hover:bg-white/5"
                 >
                   Join BooksWithYou
                 </Link>

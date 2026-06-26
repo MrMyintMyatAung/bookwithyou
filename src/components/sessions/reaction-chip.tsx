@@ -23,8 +23,8 @@ export function ReactionChip({
       className={cn(
         "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium transition-colors duration-200 border",
         active
-          ? "bg-primary-50 border-primary-300 text-primary-800 hover:bg-primary-100"
-          : "bg-neutral-50 border-neutral-200 text-neutral-600 hover:bg-neutral-100 hover:border-neutral-300",
+          ? "bg-coral-100 border-coral-300 text-coral-600 hover:bg-coral-200"
+          : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200 hover:border-slate-300",
         onClick ? "cursor-pointer" : "cursor-default",
         disabled && "opacity-50 cursor-wait"
       )}

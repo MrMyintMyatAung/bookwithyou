@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { cn } from "../../lib/cn";
 
 interface ProgressBarProps {
@@ -21,6 +22,12 @@ export function ProgressBar({
   const isComplete = pct >= 100;
   const isEmpty = pct === 0;
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const barHeight = size === "sm" ? "h-2" : "h-3";
   const textSize = size === "sm" ? "text-xs" : "text-sm";
 
@@ -35,27 +42,27 @@ export function ProgressBar({
     >
       <div
         className={cn(
-          "flex-1 rounded-full bg-neutral-100 overflow-hidden",
+          "flex-1 rounded-full bg-slate-100 overflow-hidden",
           barHeight
         )}
       >
         <div
           className={cn(
-            "h-full rounded-full transition-all duration-500 ease-out",
+            "h-full rounded-full transition-all duration-700 ease-out",
             isComplete
-              ? "bg-emerald-500"
+              ? "bg-teal-500"
               : isEmpty
-                ? "bg-neutral-200"
-                : "bg-amber-500"
+                ? "bg-slate-200"
+                : "bg-coral-500"
           )}
-          style={{ width: `${Math.max(pct, isEmpty ? 0 : 4)}%` }}
+          style={{ width: mounted ? `${Math.max(pct, isEmpty ? 0 : 4)}%` : "0%" }}
         />
       </div>
       <span
         className={cn(
           "font-medium tabular-nums shrink-0 min-w-[4rem] text-right",
           textSize,
-          isComplete ? "text-emerald-700" : "text-neutral-500"
+          isComplete ? "text-teal-600" : "text-slate-500"
         )}
       >
         {isComplete ? (

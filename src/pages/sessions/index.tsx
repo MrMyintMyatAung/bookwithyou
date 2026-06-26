@@ -14,10 +14,10 @@ export function SessionListPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900">
+          <h1 className="text-3xl sm:text-4xl font-bold text-navy-900">
             Reading Sessions
           </h1>
-          <p className="mt-2 text-neutral-500">
+          <p className="mt-2 text-slate-500">
             Browse public sessions or start your own.
           </p>
         </div>
@@ -40,12 +40,8 @@ export function SessionListPage() {
       {/* Error */}
       {isError && (
         <Card className="p-12 text-center">
-          <div className="text-4xl mb-3">😵</div>
-          <h3 className="font-semibold text-neutral-900 mb-2">
-            Could not load sessions
-          </h3>
-          <p className="text-sm text-neutral-500 mb-4">
-            Something went wrong. Give it another try.
+          <p className="text-slate-500 mb-4">
+            Could not load sessions. Something went wrong.
           </p>
           <Button variant="secondary" onClick={() => refetch()}>
             Retry
@@ -56,11 +52,10 @@ export function SessionListPage() {
       {/* Empty */}
       {!isLoading && !isError && sessions?.length === 0 && (
         <Card className="p-12 text-center">
-          <div className="text-4xl mb-3">📖</div>
-          <h3 className="font-semibold text-neutral-900 mb-2">
+          <h3 className="font-semibold text-navy-900 mb-2">
             No reading sessions yet
           </h3>
-          <p className="text-sm text-neutral-500 mb-4">
+          <p className="text-sm text-slate-500 mb-4">
             Be the first to start one!
           </p>
           {isAuthenticated ? (

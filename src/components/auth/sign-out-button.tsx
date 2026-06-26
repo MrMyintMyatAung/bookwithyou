@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../ui/button";
 
-export function SignOutButton() {
+export function SignOutButton({ className }: { className?: string }) {
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -23,6 +23,7 @@ export function SignOutButton() {
       size="sm"
       onClick={handleSignOut}
       loading={loading}
+      className={className}
     >
       {loading ? "Signing out…" : "Sign Out"}
     </Button>

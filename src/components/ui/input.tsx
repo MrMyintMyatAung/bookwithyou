@@ -14,7 +14,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor={inputId}
-          className="text-sm font-medium text-neutral-700"
+          className="text-sm font-medium text-slate-700"
         >
           {label}
         </label>
@@ -22,12 +22,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            "px-3 py-2 rounded-xl border bg-white text-neutral-900 placeholder:text-neutral-400 transition-colors duration-200",
-            "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
-            "disabled:bg-neutral-100 disabled:text-neutral-400 disabled:cursor-not-allowed",
+            "px-3 py-2 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 transition-colors duration-200",
+            "focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500",
+            "disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed",
             error
               ? "border-red-400 focus:ring-red-400 focus:border-red-400"
-              : "border-neutral-300",
+              : "border-slate-300",
             className
           )}
           aria-invalid={error ? "true" : undefined}

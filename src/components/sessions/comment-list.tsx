@@ -60,7 +60,7 @@ export function CommentList({
                 handleSubmit();
               }
             }}
-            className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white text-sm text-neutral-800 placeholder:text-neutral-400 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-neutral-50 disabled:text-neutral-400 transition-colors"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder:text-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           />
           {createComment.isError && (
             <p className="text-sm text-red-600 mt-1">
@@ -69,7 +69,7 @@ export function CommentList({
           )}
           <div className="flex items-center justify-between mt-2">
             <span
-              className={`text-xs ${isOverLimit ? "text-red-500 font-medium" : "text-neutral-400"}`}
+              className={`text-xs ${isOverLimit ? "text-red-500 font-medium" : "text-slate-400"}`}
             >
               {isOverLimit
                 ? `${Math.abs(charsRemaining)} characters over limit`
@@ -94,16 +94,16 @@ export function CommentList({
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="flex gap-3 py-4 first:pt-0 border-b border-neutral-100 last:border-0 animate-pulse"
+              className="flex gap-3 py-4 first:pt-0 border-b border-slate-100 last:border-0 animate-pulse"
             >
-              <div className="h-8 w-8 bg-neutral-200 rounded-full shrink-0" />
+              <div className="h-8 w-8 bg-slate-200 rounded-full shrink-0" />
               <div className="flex-1 space-y-2">
                 <div className="flex gap-2">
-                  <div className="h-3.5 bg-neutral-200 rounded w-20" />
-                  <div className="h-3.5 bg-neutral-100 rounded w-12" />
+                  <div className="h-3.5 bg-slate-200 rounded w-20" />
+                  <div className="h-3.5 bg-slate-100 rounded w-12" />
                 </div>
-                <div className="h-4 bg-neutral-100 rounded w-full" />
-                <div className="h-4 bg-neutral-100 rounded w-3/4" />
+                <div className="h-4 bg-slate-100 rounded w-full" />
+                <div className="h-4 bg-slate-100 rounded w-3/4" />
               </div>
             </div>
           ))}
@@ -112,7 +112,7 @@ export function CommentList({
 
       {isError && (
         <Card className="p-6 text-center">
-          <p className="text-sm text-neutral-500 mb-3">
+          <p className="text-sm text-slate-500 mb-3">
             Could not load comments.
           </p>
           <Button variant="secondary" size="sm" onClick={() => refetch()}>
@@ -123,15 +123,14 @@ export function CommentList({
 
       {!isLoading && !isError && comments && comments.length === 0 && (
         <div className="text-center py-8">
-          <div className="text-3xl mb-3">💬</div>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-slate-500">
             No comments yet. Start the discussion!
           </p>
         </div>
       )}
 
       {!isLoading && !isError && comments && comments.length > 0 && (
-        <div className="divide-y divide-neutral-100">
+        <div className="divide-y divide-slate-100">
           {comments.map((comment) => (
             <CommentItem
               key={comment.id}

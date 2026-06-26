@@ -14,7 +14,7 @@ export function ProgressLog({ sessionId, totalChapters }: ProgressLogProps) {
 
   return (
     <div className="flex flex-col xs:flex-row xs:items-center gap-2">
-      <span className="text-sm text-neutral-500">Your progress:</span>
+      <span className="text-sm text-slate-600">Your progress:</span>
       <div className="flex items-center gap-1 flex-wrap">
         <Button
           variant="secondary"
@@ -32,10 +32,10 @@ export function ProgressLog({ sessionId, totalChapters }: ProgressLogProps) {
           −
         </Button>
 
-        <span className="inline-flex items-center justify-center min-w-[3rem] px-2 py-1 text-sm font-semibold tabular-nums text-neutral-900">
+        <span className="inline-flex items-center justify-center min-w-[3rem] px-2 py-1 text-sm font-semibold tabular-nums text-slate-900">
           {updateProgress.isPending ? (
             <svg
-              className="animate-spin h-4 w-4 text-primary-600"
+              className="animate-spin h-4 w-4 text-coral-500"
               fill="none"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -81,7 +81,7 @@ export function ProgressLog({ sessionId, totalChapters }: ProgressLogProps) {
         </Button>
 
         {totalChapters > 0 && (
-          <span className="text-sm text-neutral-400">
+          <span className="text-sm text-slate-500">
             / {totalChapters} chapters
           </span>
         )}

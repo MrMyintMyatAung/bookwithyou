@@ -76,10 +76,10 @@ export function CreateSessionForm() {
     <div className="min-h-[80vh] flex items-start justify-center px-4 py-8 sm:py-16">
       <Card className="w-full max-w-xl p-6 sm:p-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-neutral-900">
+          <h1 className="text-2xl font-bold text-navy-900">
             Start a Reading Session
           </h1>
-          <p className="mt-2 text-neutral-500">
+          <p className="mt-2 text-slate-500">
             Choose a book, list the chapters, and invite friends to read along.
           </p>
         </div>
@@ -87,7 +87,7 @@ export function CreateSessionForm() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
           {serverError && (
             <div
-              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700"
+              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-600"
               role="alert"
             >
               {serverError}
@@ -96,7 +96,7 @@ export function CreateSessionForm() {
 
           {/* Session details */}
           <fieldset disabled={isLoading} className="flex flex-col gap-5">
-            <legend className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-1">
+            <legend className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">
               Session
             </legend>
 
@@ -112,7 +112,7 @@ export function CreateSessionForm() {
 
             {/* Visibility selector */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-neutral-700">
+              <label className="text-sm font-medium text-slate-700">
                 Visibility
               </label>
               <div className="flex gap-3">
@@ -124,15 +124,15 @@ export function CreateSessionForm() {
                     aria-pressed={visibility === opt}
                     className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-xl border transition-all duration-200 ${
                       visibility === opt
-                        ? "border-primary-500 bg-primary-50 text-primary-700 shadow-sm"
-                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                        ? "border-coral-300 bg-coral-50 text-coral-600"
+                        : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700"
                     }`}
                   >
-                    {opt === "public" ? "🌐 Public" : "🔒 Private"}
+                    {opt === "public" ? "Public" : "Private"}
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-neutral-400 mt-0.5">
+              <p className="text-xs text-slate-400 mt-0.5">
                 {visibility === "public"
                   ? "Anyone can find and join this session."
                   : "Only people with the link can join."}
@@ -142,7 +142,7 @@ export function CreateSessionForm() {
 
           {/* Book details */}
           <fieldset disabled={isLoading} className="flex flex-col gap-5">
-            <legend className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-1">
+            <legend className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">
               Book
             </legend>
 
@@ -170,7 +170,7 @@ export function CreateSessionForm() {
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="chapters"
-                className="text-sm font-medium text-neutral-700"
+                className="text-sm font-medium text-slate-700"
               >
                 Chapters
               </label>
@@ -180,10 +180,10 @@ export function CreateSessionForm() {
                 onChange={(e) => setChaptersRaw(e.target.value)}
                 placeholder={`Prologue\nCh. 1: The Beginning\nCh. 2: The Road Ahead`}
                 rows={6}
-                className={`px-3 py-2 rounded-xl border bg-white text-neutral-900 placeholder:text-neutral-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-neutral-100 disabled:text-neutral-400 disabled:cursor-not-allowed resize-y ${
+                className={`px-3 py-2 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed resize-y ${
                   fieldErrors.chapters
                     ? "border-red-400 focus:ring-red-400 focus:border-red-400"
-                    : "border-neutral-300"
+                    : "border-slate-300"
                 }`}
                 aria-invalid={fieldErrors.chapters ? "true" : undefined}
                 aria-describedby={
@@ -199,9 +199,8 @@ export function CreateSessionForm() {
                   {fieldErrors.chapters}
                 </p>
               ) : (
-                <p className="text-xs text-neutral-400">
-                  Enter one chapter per line. Add as many as you want — you can
-                  always edit later.
+                <p className="text-xs text-slate-400">
+                  Enter one chapter per line. Add as many as you want.
                 </p>
               )}
             </div>

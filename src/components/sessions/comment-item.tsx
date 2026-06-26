@@ -39,7 +39,6 @@ export function CommentItem({
 
   const isAuthor = currentUserId != null && currentUserId === comment.author_id;
 
-  // Close confirmation — key handler
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") setConfirming(false);
@@ -47,14 +46,12 @@ export function CommentItem({
     []
   );
 
-  // Close confirmation on Escape
   useEffect(() => {
     if (!confirming) return;
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [confirming, handleKeyDown]);
 
-  // When confirming, trap focus inside the confirmation buttons
   useEffect(() => {
     if (confirming) {
       cancelRef.current?.focus();
@@ -63,12 +60,12 @@ export function CommentItem({
 
   if (deleteComment.isPending) {
     return (
-      <div className="py-4 first:pt-0 last:pb-0 border-b border-neutral-100 last:border-0 opacity-60">
+      <div className="py-4 first:pt-0 last:pb-0 border-b border-slate-100 last:border-0 opacity-60">
         <div className="flex gap-3">
-          <div className="h-8 w-8 rounded-full bg-neutral-200 shrink-0 mt-0.5 animate-pulse" />
+          <div className="h-8 w-8 rounded-full bg-slate-200 shrink-0 mt-0.5 animate-pulse" />
           <div className="flex-1 space-y-2 animate-pulse">
-            <div className="h-4 bg-neutral-100 rounded w-24" />
-            <div className="h-4 bg-neutral-100 rounded w-full" />
+            <div className="h-4 bg-slate-100 rounded w-24" />
+            <div className="h-4 bg-slate-100 rounded w-full" />
           </div>
         </div>
       </div>
@@ -76,9 +73,8 @@ export function CommentItem({
   }
 
   return (
-    <div className="group py-4 first:pt-0 last:pb-0 border-b border-neutral-100 last:border-0">
+    <div className="group py-4 first:pt-0 last:pb-0 border-b border-slate-100 last:border-0">
       <div className="flex gap-3">
-        {/* Avatar */}
         <div className="mt-0.5">
           <Avatar
             avatarUrl={comment.author.avatar_url}
@@ -88,25 +84,22 @@ export function CommentItem({
         </div>
 
         <div className="flex-1 min-w-0">
-          {/* Author + time */}
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-semibold text-neutral-800">
+            <span className="text-sm font-semibold text-slate-700">
               {comment.author.username}
             </span>
-            <span className="text-xs text-neutral-400">
+            <span className="text-xs text-slate-400">
               {relativeTime(comment.created_at)}
             </span>
             {comment.updated_at !== comment.created_at && (
-              <span className="text-xs text-neutral-400">(edited)</span>
+              <span className="text-xs text-slate-400">(edited)</span>
             )}
           </div>
 
-          {/* Body */}
-          <p className="text-sm text-neutral-700 whitespace-pre-wrap break-words">
+          <p className="text-sm text-slate-600 whitespace-pre-wrap break-words">
             {comment.body}
           </p>
 
-          {/* Reaction bar */}
           <div className="flex items-center gap-1.5 mt-2 flex-wrap">
             {comment.reactions.map((rxn) => (
               <ReactionChip
@@ -128,7 +121,6 @@ export function CommentItem({
               />
             ))}
 
-            {/* Add reaction button */}
             {isMember && (
               <ReactionPicker
                 loading={toggleReaction.isPending}
@@ -142,12 +134,11 @@ export function CommentItem({
               />
             )}
 
-            {/* Delete confirm or button (author only) */}
             {isAuthor && !confirming && (
               <button
                 type="button"
                 onClick={() => setConfirming(true)}
-                className="ml-auto opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-xs text-neutral-400 hover:text-red-600 p-1 rounded"
+                className="ml-auto opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-xs text-slate-400 hover:text-red-500 p-1 rounded"
                 aria-label="Delete comment"
               >
                 <svg
@@ -168,14 +159,13 @@ export function CommentItem({
             )}
           </div>
 
-          {/* Inline delete confirmation */}
           {confirming && (
             <div
               className="mt-2 flex items-center gap-2 text-xs"
               role="alertdialog"
               aria-label="Confirm delete comment"
             >
-              <span className="text-neutral-500">Delete this comment?</span>
+              <span className="text-slate-500">Delete this comment?</span>
               <Button
                 size="sm"
                 onClick={() => deleteComment.mutate(comment.id)}
@@ -186,7 +176,7 @@ export function CommentItem({
                 ref={cancelRef}
                 type="button"
                 onClick={() => setConfirming(false)}
-                className="text-neutral-500 hover:text-neutral-700 underline"
+                className="text-slate-400 hover:text-slate-700 underline"
               >
                 Cancel
               </button>

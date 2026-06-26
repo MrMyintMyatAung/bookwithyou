@@ -24,7 +24,6 @@ export function ReactionPicker({ onPick, loading }: ReactionPickerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef(0);
 
-  // Close on outside click
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -39,7 +38,6 @@ export function ReactionPicker({ onPick, loading }: ReactionPickerProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
-  // Close on escape
   useEffect(() => {
     if (!open) return;
     const handler = (e: globalThis.KeyboardEvent) => {
@@ -78,8 +76,8 @@ export function ReactionPicker({ onPick, loading }: ReactionPickerProps) {
         type="button"
         onClick={() => setOpen(!open)}
         className={cn(
-          "inline-flex items-center justify-center h-6 w-6 rounded-full text-xs text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 transition-colors",
-          open && "text-primary-600 bg-primary-50"
+          "inline-flex items-center justify-center h-6 w-6 rounded-full text-xs text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors",
+          open && "text-coral-500 bg-coral-50"
         )}
         aria-label="Add reaction"
         aria-expanded={open}
@@ -96,7 +94,7 @@ export function ReactionPicker({ onPick, loading }: ReactionPickerProps) {
 
       {open && (
         <div
-          className="absolute bottom-full left-0 mb-1 bg-white rounded-xl shadow-lg border border-neutral-200 p-1.5 flex gap-1 z-50"
+          className="absolute bottom-full left-0 mb-1 bg-white rounded-xl shadow-lg border border-slate-200 p-1.5 flex gap-1 z-50"
           role="listbox"
           aria-label="Choose a reaction"
           onKeyDown={handleKeyDown}
@@ -113,7 +111,7 @@ export function ReactionPicker({ onPick, loading }: ReactionPickerProps) {
                 setOpen(false);
               }}
               className={cn(
-                "h-8 w-8 flex items-center justify-center rounded-lg text-lg hover:bg-neutral-100 transition-colors",
+                "h-8 w-8 flex items-center justify-center rounded-lg text-lg hover:bg-slate-100 transition-colors",
                 loading && "opacity-50 cursor-wait"
               )}
               title={emoji}
