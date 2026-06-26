@@ -19,7 +19,7 @@ export function ForgotPasswordPage() {
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       email.trim(),
       {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: `${window.location.origin}/bookwithyou/#/reset-password`,
       }
     );
 

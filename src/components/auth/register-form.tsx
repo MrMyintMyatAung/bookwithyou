@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../hooks/useAuth";
 import { Input } from "../ui/input";
@@ -28,7 +28,6 @@ function validatePassword(password: string): string | null {
 
 export function RegisterForm() {
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -40,12 +39,10 @@ export function RegisterForm() {
   }>({});
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState("");
 
-  // If already authenticated, redirect to home
-  if (isAuthenticated) {
-    navigate("/", { replace: true });
-    return null;
-  }
+  // If already authenticated, show profile link
+  // Don't redirect — they might have just verified their email in another tab
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -71,13 +68,11 @@ export function RegisterForm() {
       password,
       options: {
         data: { username: username.trim() },
+        emailRedirectTo: `${window.location.origin}/bookwithyou/#/confirmed`,
       },
     });
 
     if (authError) {
-      // Supabase signUp errors: "User already registered" means the email is taken.
-      // The username uniqueness is enforced by a trigger/RLS in the profiles table
-      // and would surface as a different error or as a failed profile creation.
       if (
         authError.message?.includes("already registered") ||
         authError.message?.includes("already exists")
@@ -90,10 +85,73 @@ export function RegisterForm() {
       }
       setLoading(false);
     } else {
-      navigate("/", { replace: true });
+      // Email confirmation is enabled — show success message
+      setEmailSent(email);
+      setLoading(false);
     }
   };
 
+  // Show "check your email" screen
+  if (emailSent) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-4">
+        <Card className="w-full max-w-md p-8 text-center">
+          <div className="mb-6">
+            <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+              <svg className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-neutral-900">
+              Check your email
+            </h1>
+            <p className="mt-2 text-neutral-500">
+              We sent a confirmation link to{" "}
+              <span className="font-medium text-neutral-700">{emailSent}</span>
+            </p>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left text-sm text-amber-800 mb-6">
+            <p className="font-semibold mb-1">📬 What to do next:</p>
+            <ol className="list-decimal list-inside space-y-1 mt-2">
+              <li>Open your inbox and find the email from Supabase</li>
+              <li>Click <strong>"Confirm your email address"</strong></li>
+              <li>You'll be brought back here — signed in and ready to go</li>
+            </ol>
+            <p className="mt-3 text-amber-700 text-xs">
+              Didn't get it? Check your spam folder. Still nothing? Try registering again.
+            </p>
+          </div>
+
+          <Link to="/">
+            <Button variant="secondary">Back to Home</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
+
+  // If already fully authenticated, show a brief message
+  if (isAuthenticated) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-4">
+        <Card className="w-full max-w-md p-8 text-center">
+          <div className="mb-4 text-emerald-600">
+            <svg className="h-12 w-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h1 className="text-xl font-bold text-neutral-900">You're signed in</h1>
+          <p className="mt-2 text-neutral-500 mb-4">Your email has been confirmed. You're all set!</p>
+          <Link to="/">
+            <Button>Go to Home</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
+
+  // Registration form
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <Card className="w-full max-w-md p-8">

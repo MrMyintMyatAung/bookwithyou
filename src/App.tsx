@@ -12,6 +12,7 @@ import { CreateSessionPage } from "./pages/sessions/new";
 import { SessionDetailPage } from "./pages/sessions/detail";
 import { OwnProfilePage } from "./pages/profile/me";
 import { MemberProfilePage } from "./pages/profile/view";
+import { EmailConfirmedPage } from "./pages/auth/confirmed";
 import { NotFoundPage } from "./pages/not-found";
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ export default function App() {
               <Route path="sessions" element={<SessionListPage />} />
               <Route path="sessions/new" element={<CreateSessionPage />} />
               <Route path="sessions/:id" element={<SessionDetailPage />} />
+              <Route path="confirmed" element={<EmailConfirmedPage />} />
               <Route path="profile" element={<OwnProfilePage />} />
               <Route
                 path="profile/:username"
