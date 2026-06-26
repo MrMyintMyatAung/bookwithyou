@@ -1,5 +1,6 @@
-import { useParams, Link } from "react-router-dom";
-import { useSession, useSessionMembers, useJoinSession, useUpdateSessionStatus } from "../../hooks/useSessions";
+import { useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useSession, useSessionMembers, useJoinSession, useUpdateSessionStatus, useDeleteSession } from "../../hooks/useSessions";
 import { useSessionProgress, useProgressRealtime } from "../../hooks/useProgress";
 import { useCommentsRealtime } from "../../hooks/useComments";
 import { useReactionsRealtime } from "../../hooks/useReactions";
@@ -28,6 +29,9 @@ export function SessionDetailPage() {
 
   const joinSession = useJoinSession();
   const updateStatus = useUpdateSessionStatus();
+  const deleteSession = useDeleteSession();
+  const navigate = useNavigate();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const uid = user?.id;
   useProgressRealtime(uid ? id : undefined);
@@ -199,6 +203,54 @@ export function SessionDetailPage() {
           );
         })()}
       </Card>
+
+      {/* Host: delete session */}
+      {isHost && (
+        <div className="mb-8">
+          {showDeleteConfirm ? (
+            <Card className="p-4 border-red-200 dark:border-red-800/50 bg-red-50 dark:bg-red-950/40">
+              <p className="text-sm text-red-700 dark:text-red-300 mb-3">
+                Delete this session? This will remove the book, all progress, comments, and reactions. This cannot be undone.
+              </p>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  loading={deleteSession.isPending}
+                  onClick={() => {
+                    deleteSession.mutate(session!.id, {
+                      onSuccess: () => navigate("/sessions", { replace: true }),
+                    });
+                  }}
+                  className="!bg-red-600 hover:!bg-red-700"
+                >
+                  {deleteSession.isPending ? "Deleting…" : "Yes, delete"}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowDeleteConfirm(false)}
+                  disabled={deleteSession.isPending}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </Card>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowDeleteConfirm(true)}
+              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40"
+            >
+              <svg className="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Delete Session
+            </Button>
+          )}
+        </div>
+      )}
 
       {/* Members */}
       <Card className="p-6 mb-8">

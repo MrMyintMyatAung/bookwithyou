@@ -280,3 +280,43 @@ export function useUpdateSessionStatus() {
     },
   });
 }
+
+export function useDeleteSession() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (sessionId: string) => {
+      // Fetch the session to get the book_id before deleting
+      const { data: session, error: fetchError } = await supabase
+        .from("sessions")
+        .select("book_id")
+        .eq("id", sessionId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Delete the session (cascades to memberships, progress, comments, reactions)
+      const { error: deleteError } = await supabase
+        .from("sessions")
+        .delete()
+        .eq("id", sessionId);
+
+      if (deleteError) throw deleteError;
+
+      // Clean up the orphaned book
+      if (session?.book_id) {
+        const { error: bookError } = await supabase
+          .from("books")
+          .delete()
+          .eq("id", session.book_id);
+
+        if (bookError) {
+          console.error("Failed to clean up orphaned book:", bookError.message);
+        }
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sessions"] });
+    },
+  });
+}
