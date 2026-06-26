@@ -121,24 +121,24 @@ export function AvatarUpload({
       {/* Controls */}
       <div className="flex-1 min-w-0">
         {/* User identity */}
-        <p className="font-bold text-neutral-900 truncate">
+        <p className="font-bold text-neutral-900 dark:text-gray-100 truncate">
           {displayName ?? username}
         </p>
-        <p className="text-sm text-neutral-500 mb-3">@{username}</p>
+        <p className="text-sm text-neutral-500 dark:text-gray-400 mb-3">@{username}</p>
 
         {/* Validation / mutation error */}
         {validationError && (
-          <p className="text-sm text-red-600 mb-2" role="alert">
+          <p className="text-sm text-red-600 dark:text-red-400 mb-2" role="alert">
             {validationError}
           </p>
         )}
         {updateAvatar.isError && updateAvatar.error instanceof Error && (
-          <p className="text-sm text-red-600 mb-2" role="alert">
+          <p className="text-sm text-red-600 dark:text-red-400 mb-2" role="alert">
             {updateAvatar.error.message}
           </p>
         )}
         {removeAvatar.isError && removeAvatar.error instanceof Error && (
-          <p className="text-sm text-red-600 mb-2" role="alert">
+          <p className="text-sm text-red-600 dark:text-red-400 mb-2" role="alert">
             {removeAvatar.error.message}
           </p>
         )}
@@ -188,7 +188,7 @@ export function AvatarUpload({
           )}
         </div>
 
-        <p className="text-xs text-neutral-400 mt-2">
+        <p className="text-xs text-neutral-400 dark:text-gray-500 mt-2">
           PNG, JPEG, WebP, or GIF · Max 5 MB
         </p>
 

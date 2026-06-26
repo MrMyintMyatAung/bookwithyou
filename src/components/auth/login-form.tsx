@@ -86,17 +86,17 @@ export function LoginForm() {
         <Card className="w-full max-w-md p-8 text-center">
           <div className="mb-6">
             <div className="mx-auto w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-              <svg className="h-8 w-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-8 w-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-neutral-900">
+            <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">
               Email not confirmed
             </h1>
-            <p className="mt-2 text-neutral-500">
+            <p className="mt-2 text-neutral-500 dark:text-gray-400">
               You need to confirm your email before signing in.
               The confirmation link was sent to{" "}
-              <span className="font-medium text-neutral-700">{resendingTo}</span>
+              <span className="font-medium text-neutral-700 dark:text-gray-300">{resendingTo}</span>
             </p>
           </div>
 
@@ -129,12 +129,12 @@ export function LoginForm() {
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <Card className="w-full max-w-md p-8 text-center">
           <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
-            <svg className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-8 w-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <h1 className="text-xl font-bold text-neutral-900">Confirmation email sent!</h1>
-          <p className="mt-2 text-neutral-500">
+          <h1 className="text-xl font-bold text-neutral-900 dark:text-gray-100">Confirmation email sent!</h1>
+          <p className="mt-2 text-neutral-500 dark:text-gray-400">
             Check <span className="font-medium">{sentEmail}</span> and click the link to confirm.
           </p>
           <button
@@ -153,14 +153,14 @@ export function LoginForm() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-neutral-900">Welcome back</h1>
-          <p className="mt-2 text-neutral-500">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">Welcome back</h1>
+          <p className="mt-2 text-neutral-500 dark:text-gray-400">Sign in to your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
           {resetSuccess && (
             <div
-              className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-sm text-emerald-700"
+              className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-sm text-emerald-700 dark:text-emerald-300"
               role="alert"
             >
               Password updated successfully! Sign in with your new password.
@@ -169,7 +169,7 @@ export function LoginForm() {
 
           {error && (
             <div
-              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700"
+              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 dark:text-red-300"
               role="alert"
             >
               {error}
@@ -217,7 +217,7 @@ export function LoginForm() {
           </Link>
         </div>
 
-        <p className="mt-6 text-center text-sm text-neutral-500">
+        <p className="mt-6 text-center text-sm text-neutral-500 dark:text-gray-400">
           Don&apos;t have an account?{" "}
           <Link
             to="/register"

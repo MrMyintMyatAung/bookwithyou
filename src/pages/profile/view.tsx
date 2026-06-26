@@ -27,13 +27,13 @@ export function MemberProfilePage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
         <div className="animate-pulse space-y-6">
           <div className="flex items-center gap-4 mb-8">
-            <div className="h-20 w-20 bg-neutral-200 rounded-full" />
+            <div className="h-20 w-20 bg-neutral-200 dark:bg-gray-800 rounded-full" />
             <div className="space-y-2">
-              <div className="h-6 bg-neutral-200 rounded w-40" />
-              <div className="h-4 bg-neutral-100 rounded w-24" />
+              <div className="h-6 bg-neutral-200 dark:bg-gray-800 rounded w-40" />
+              <div className="h-4 bg-neutral-100 dark:bg-gray-900 rounded w-24" />
             </div>
           </div>
-          <div className="h-48 bg-neutral-100 rounded-2xl" />
+          <div className="h-48 bg-neutral-100 dark:bg-gray-900 rounded-2xl" />
         </div>
       </div>
     );
@@ -45,10 +45,10 @@ export function MemberProfilePage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
         <Card className="p-12 text-center">
           <div className="text-4xl mb-3">😵</div>
-          <h2 className="text-xl font-semibold text-neutral-900 mb-2">
+          <h2 className="text-xl font-semibold text-neutral-900 dark:text-gray-100 mb-2">
             Could not load this profile
           </h2>
-          <p className="text-sm text-neutral-500 mb-4">Something went wrong.</p>
+          <p className="text-sm text-neutral-500 dark:text-gray-400 mb-4">Something went wrong.</p>
           <Button variant="secondary" onClick={() => refetch()}>
             Retry
           </Button>
@@ -62,10 +62,10 @@ export function MemberProfilePage() {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
         <div className="text-6xl mb-4">📚</div>
-        <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-gray-100 mb-2">
           Reader not found
         </h2>
-        <p className="text-neutral-500 mb-6">
+        <p className="text-neutral-500 dark:text-gray-400 mb-6">
           The reader @{username} doesn&apos;t exist or may have been removed.
         </p>
         <Link to="/sessions">
@@ -92,7 +92,7 @@ export function MemberProfilePage() {
         />
 
         {isOwnProfile && (
-          <div className="mt-6 pt-6 border-t border-neutral-100">
+          <div className="mt-6 pt-6 border-t border-neutral-100 dark:border-gray-800">
             <Link to="/profile">
               <Button variant="secondary" size="sm">
                 Edit Your Profile
@@ -104,24 +104,24 @@ export function MemberProfilePage() {
 
       {/* Sessions */}
       <Card className="p-6 sm:p-8">
-        <h2 className="text-lg font-bold text-neutral-900 mb-6">
+        <h2 className="text-lg font-bold text-neutral-900 dark:text-gray-100 mb-6">
           Reading Sessions
         </h2>
 
         {/* Hosting */}
         {hostedSessions.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+            <h3 className="text-sm font-semibold text-neutral-500 dark:text-gray-400 uppercase tracking-wider mb-3">
               Hosting ({hostedSessions.length})
             </h3>
-            <ul className="divide-y divide-neutral-100">
+            <ul className="divide-y divide-neutral-100 dark:divide-gray-800">
               {hostedSessions.map((s) => (
                 <li key={s.id}>
                   <Link
                     to={`/sessions/${s.id}`}
                     className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-neutral-50 transition-colors group"
                   >
-                    <span className="text-sm font-medium text-neutral-800 group-hover:text-primary-700 transition-colors truncate">
+                    <span className="text-sm font-medium text-neutral-800 dark:text-gray-200 group-hover:text-primary-700 transition-colors truncate">
                       {s.title}
                     </span>
                     <span
@@ -139,17 +139,17 @@ export function MemberProfilePage() {
         {/* Joined */}
         {joinedSessions.length > 0 && (
           <div>
-            <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+            <h3 className="text-sm font-semibold text-neutral-500 dark:text-gray-400 uppercase tracking-wider mb-3">
               Reading ({joinedSessions.length})
             </h3>
-            <ul className="divide-y divide-neutral-100">
+            <ul className="divide-y divide-neutral-100 dark:divide-gray-800">
               {joinedSessions.map((s) => (
                 <li key={s.id}>
                   <Link
                     to={`/sessions/${s.id}`}
                     className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-neutral-50 transition-colors group"
                   >
-                    <span className="text-sm font-medium text-neutral-800 group-hover:text-primary-700 transition-colors truncate">
+                    <span className="text-sm font-medium text-neutral-800 dark:text-gray-200 group-hover:text-primary-700 transition-colors truncate">
                       {s.title}
                     </span>
                     <span
@@ -167,7 +167,7 @@ export function MemberProfilePage() {
         {hostedSessions.length === 0 && joinedSessions.length === 0 && (
           <div className="text-center py-8">
             <div className="text-3xl mb-3">📖</div>
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500 dark:text-gray-400">
               {isOwnProfile
                 ? "You haven't joined any sessions yet."
                 : `${profile.username} hasn't joined any public sessions yet.`}

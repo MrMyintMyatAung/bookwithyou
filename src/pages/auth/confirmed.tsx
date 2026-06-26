@@ -31,7 +31,7 @@ export function EmailConfirmedPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <Card className="w-full max-w-md p-8 text-center">
           <Spinner className="mx-auto mb-4" />
-          <p className="text-neutral-500">Confirming your email…</p>
+          <p className="text-neutral-500 dark:text-gray-400">Confirming your email…</p>
         </Card>
       </div>
     );
@@ -43,14 +43,14 @@ export function EmailConfirmedPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <Card className="w-full max-w-md p-8 text-center">
           <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
-            <svg className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-8 w-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-neutral-900">
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">
             Email confirmed!
           </h1>
-          <p className="mt-2 text-neutral-500">
+          <p className="mt-2 text-neutral-500 dark:text-gray-400">
             Your account is ready. Start exploring BooksWithYou.
           </p>
           <div className="mt-6 flex flex-col gap-3">
@@ -71,15 +71,15 @@ export function EmailConfirmedPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <Card className="w-full max-w-md p-8 text-center">
         <div className="mx-auto w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-          <Spinner className="text-amber-600" />
+          <Spinner className="text-amber-600 dark:text-amber-400" />
         </div>
-        <h1 className="text-xl font-bold text-neutral-900">
+        <h1 className="text-xl font-bold text-neutral-900 dark:text-gray-100">
           Confirming your email…
         </h1>
-        <p className="mt-2 text-neutral-500">
+        <p className="mt-2 text-neutral-500 dark:text-gray-400">
           If you clicked the link in your email, hang tight — we're finishing up.
         </p>
-        <p className="mt-4 text-sm text-neutral-400">
+        <p className="mt-4 text-sm text-neutral-400 dark:text-gray-500">
           If nothing happens, try{" "}
           <Link to="/login" className="text-primary-600 hover:underline">
             signing in

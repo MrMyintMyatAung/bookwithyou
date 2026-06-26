@@ -14,10 +14,10 @@ export function SessionListPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-navy-900">
+          <h1 className="text-3xl sm:text-4xl font-bold text-navy-900 dark:text-gray-100">
             Reading Sessions
           </h1>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-slate-500 dark:text-gray-400">
             Browse public sessions or start your own.
           </p>
         </div>
@@ -40,7 +40,7 @@ export function SessionListPage() {
       {/* Error */}
       {isError && (
         <Card className="p-12 text-center">
-          <p className="text-slate-500 mb-4">
+          <p className="text-slate-500 dark:text-gray-400 mb-4">
             Could not load sessions. Something went wrong.
           </p>
           <Button variant="secondary" onClick={() => refetch()}>
@@ -52,10 +52,10 @@ export function SessionListPage() {
       {/* Empty */}
       {!isLoading && !isError && sessions?.length === 0 && (
         <Card className="p-12 text-center">
-          <h3 className="font-semibold text-navy-900 mb-2">
+          <h3 className="font-semibold text-navy-900 dark:text-gray-100 mb-2">
             No reading sessions yet
           </h3>
-          <p className="text-sm text-slate-500 mb-4">
+          <p className="text-sm text-slate-500 dark:text-gray-400 mb-4">
             Be the first to start one!
           </p>
           {isAuthenticated ? (

@@ -98,16 +98,16 @@ export function RegisterForm() {
         <Card className="w-full max-w-md p-8 text-center">
           <div className="mb-6">
             <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
-              <svg className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-8 w-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-neutral-900">
+            <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">
               Check your email
             </h1>
-            <p className="mt-2 text-neutral-500">
+            <p className="mt-2 text-neutral-500 dark:text-gray-400">
               We sent a confirmation link to{" "}
-              <span className="font-medium text-neutral-700">{emailSent}</span>
+              <span className="font-medium text-neutral-700 dark:text-gray-300">{emailSent}</span>
             </p>
           </div>
 
@@ -136,12 +136,12 @@ export function RegisterForm() {
     return (
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <Card className="w-full max-w-md p-8 text-center">
-          <div className="mb-4 text-emerald-600">
+          <div className="mb-4 text-emerald-600 dark:text-emerald-400">
             <svg className="h-12 w-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-xl font-bold text-neutral-900">You're signed in</h1>
+          <h1 className="text-xl font-bold text-neutral-900 dark:text-gray-100">You're signed in</h1>
           <p className="mt-2 text-neutral-500 mb-4">Your email has been confirmed. You're all set!</p>
           <Link to="/">
             <Button>Go to Home</Button>
@@ -156,16 +156,16 @@ export function RegisterForm() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-neutral-900">
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">
             Create your account
           </h1>
-          <p className="mt-2 text-neutral-500">Join BooksWithYou</p>
+          <p className="mt-2 text-neutral-500 dark:text-gray-400">Join BooksWithYou</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
           {serverError && (
             <div
-              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700"
+              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 dark:text-red-300"
               role="alert"
             >
               {serverError}
@@ -218,7 +218,7 @@ export function RegisterForm() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-neutral-500">
+        <p className="mt-6 text-center text-sm text-neutral-500 dark:text-gray-400">
           Already have an account?{" "}
           <Link
             to="/login"

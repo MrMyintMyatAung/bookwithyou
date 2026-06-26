@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-accent-500: #f97316;
   --color-accent-600: #ea580c;
@@ -81,6 +83,11 @@
     background-color: #f8fafc;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.dark {
+    color: #e2e8f0;
+    background-color: #0a0a0f;
   }
 
   body {

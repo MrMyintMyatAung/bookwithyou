@@ -25,7 +25,7 @@ export function Avatar({ avatarUrl, username, size = "md" }: AvatarProps) {
       <img
         src={url}
         alt={`${username ?? "User"}'s avatar`}
-        className={`${sizeClasses[size]} rounded-full object-cover shrink-0 ring-1 ring-slate-200`}
+        className={`${sizeClasses[size]} rounded-full object-cover shrink-0 ring-1 ring-slate-200 dark:ring-gray-700`}
         onError={() => setImgError(true)}
       />
     );
@@ -33,7 +33,7 @@ export function Avatar({ avatarUrl, username, size = "md" }: AvatarProps) {
 
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full bg-coral-100 text-coral-600 border border-coral-200 flex items-center justify-center font-bold shrink-0`}
+      className={`${sizeClasses[size]} rounded-full bg-coral-100 dark:bg-coral-900/30 text-coral-600 dark:text-coral-400 border border-coral-200 dark:border-coral-800/50 flex items-center justify-center font-bold shrink-0`}
       aria-hidden="true"
     >
       {initial}

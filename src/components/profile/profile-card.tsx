@@ -26,12 +26,12 @@ export function ProfileCard({ profile, size = "md" }: ProfileCardProps) {
         size={avatarSize}
       />
       <div className="min-w-0">
-        <h2 className="font-bold text-neutral-900 truncate text-lg">
+        <h2 className="font-bold text-neutral-900 dark:text-gray-100 truncate text-lg">
           {displayName}
         </h2>
-        <p className="text-sm text-neutral-500">@{profile.username}</p>
+        <p className="text-sm text-neutral-500 dark:text-gray-400">@{profile.username}</p>
         {joinedDate && (
-          <p className="text-xs text-neutral-400 mt-0.5">
+          <p className="text-xs text-neutral-400 dark:text-gray-500 mt-0.5">
             Joined {joinedDate}
           </p>
         )}

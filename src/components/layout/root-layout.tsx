@@ -4,14 +4,14 @@ import { NavBar } from "./nav-bar";
 
 export function RootLayout() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-gray-950">
       <SkipLink />
       <NavBar />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         <Outlet />
       </main>
       <footer
-        className="bg-navy-900 text-navy-300 py-16"
+        className="bg-navy-900 dark:bg-gray-950 text-navy-300 dark:text-gray-400 py-16"
         role="contentinfo"
       >
         <div className="mx-auto max-w-6xl px-5 sm:px-6">

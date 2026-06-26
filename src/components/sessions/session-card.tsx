@@ -67,7 +67,7 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="p-1 rounded-lg text-gray-600 hover:text-amber-500 hover:bg-amber-500/10 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
+                  className="p-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-amber-500 hover:bg-amber-500/10 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
                   aria-label={copied ? "Link copied!" : "Copy session link"}
                 >
                   {copied ? (
@@ -85,10 +85,10 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
 
             <div className="text-sm mb-4">
               <p className="font-medium text-gray-300">{bookTitle}</p>
-              <p className="text-gray-500">by {bookAuthor}</p>
+              <p className="text-gray-500 dark:text-gray-400">by {bookAuthor}</p>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
+            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mt-auto">
               <span>
                 Host:{" "}
                 <span className="font-medium text-gray-400">

@@ -47,7 +47,7 @@ export function ForgotPasswordPage() {
             </h1>
             <p className="text-sm text-neutral-500 mb-6">
               If an account exists for{" "}
-              <span className="font-medium text-neutral-700">{email}</span>,
+              <span className="font-medium text-neutral-700 dark:text-gray-300">{email}</span>,
               we&apos;ve sent a password reset link.
             </p>
             <Link to="/login">
@@ -59,10 +59,10 @@ export function ForgotPasswordPage() {
         ) : (
           <>
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold text-neutral-900">
+              <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">
                 Forgot your password?
               </h1>
-              <p className="mt-2 text-neutral-500">
+              <p className="mt-2 text-neutral-500 dark:text-gray-400">
                 Enter your email and we&apos;ll send you a reset link.
               </p>
             </div>
@@ -74,7 +74,7 @@ export function ForgotPasswordPage() {
             >
               {error && (
                 <div
-                  className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700"
+                  className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 dark:text-red-300"
                   role="alert"
                 >
                   {error}
@@ -103,7 +103,7 @@ export function ForgotPasswordPage() {
               </Button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-neutral-500">
+            <p className="mt-6 text-center text-sm text-neutral-500 dark:text-gray-400">
               <Link
                 to="/login"
                 className="font-medium text-primary-700 hover:text-primary-600 transition-colors"

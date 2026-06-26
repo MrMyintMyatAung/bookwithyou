@@ -67,7 +67,7 @@ export function ResetPasswordPage() {
   if (checkingSession) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center">
-        <Spinner className="h-8 w-8 text-primary-600" />
+        <Spinner className="h-8 w-8 text-primary-600 dark:text-primary-400" />
       </div>
     );
   }
@@ -98,10 +98,10 @@ export function ResetPasswordPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-neutral-900">
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-gray-100">
             Set a new password
           </h1>
-          <p className="mt-2 text-neutral-500">
+          <p className="mt-2 text-neutral-500 dark:text-gray-400">
             Choose a strong password for your account.
           </p>
         </div>
@@ -113,7 +113,7 @@ export function ResetPasswordPage() {
         >
           {serverError && (
             <div
-              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700"
+              className="p-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 dark:text-red-300"
               role="alert"
             >
               {serverError}

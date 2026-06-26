@@ -60,12 +60,12 @@ export function CommentItem({
 
   if (deleteComment.isPending) {
     return (
-      <div className="py-4 first:pt-0 last:pb-0 border-b border-slate-100 last:border-0 opacity-60">
+      <div className="py-4 first:pt-0 last:pb-0 border-b border-slate-100 dark:border-gray-800 last:border-0 opacity-60">
         <div className="flex gap-3">
-          <div className="h-8 w-8 rounded-full bg-slate-200 shrink-0 mt-0.5 animate-pulse" />
+          <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-gray-800 shrink-0 mt-0.5 animate-pulse" />
           <div className="flex-1 space-y-2 animate-pulse">
-            <div className="h-4 bg-slate-100 rounded w-24" />
-            <div className="h-4 bg-slate-100 rounded w-full" />
+            <div className="h-4 bg-slate-100 dark:bg-gray-900 rounded w-24" />
+            <div className="h-4 bg-slate-100 dark:bg-gray-900 rounded w-full" />
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ export function CommentItem({
   }
 
   return (
-    <div className="group py-4 first:pt-0 last:pb-0 border-b border-slate-100 last:border-0">
+    <div className="group py-4 first:pt-0 last:pb-0 border-b border-slate-100 dark:border-gray-800 last:border-0">
       <div className="flex gap-3">
         <div className="mt-0.5">
           <Avatar
@@ -85,18 +85,18 @@ export function CommentItem({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-semibold text-slate-700">
+            <span className="text-sm font-semibold text-slate-700 dark:text-gray-300">
               {comment.author.username}
             </span>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-400 dark:text-gray-500">
               {relativeTime(comment.created_at)}
             </span>
             {comment.updated_at !== comment.created_at && (
-              <span className="text-xs text-slate-400">(edited)</span>
+              <span className="text-xs text-slate-400 dark:text-gray-500">(edited)</span>
             )}
           </div>
 
-          <p className="text-sm text-slate-600 whitespace-pre-wrap break-words">
+          <p className="text-sm text-slate-600 dark:text-gray-300 whitespace-pre-wrap break-words">
             {comment.body}
           </p>
 
@@ -138,7 +138,7 @@ export function CommentItem({
               <button
                 type="button"
                 onClick={() => setConfirming(true)}
-                className="ml-auto opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-xs text-slate-400 hover:text-red-500 p-1 rounded"
+                className="ml-auto opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-xs text-slate-400 dark:text-gray-500 hover:text-red-500 p-1 rounded"
                 aria-label="Delete comment"
               >
                 <svg
@@ -165,7 +165,7 @@ export function CommentItem({
               role="alertdialog"
               aria-label="Confirm delete comment"
             >
-              <span className="text-slate-500">Delete this comment?</span>
+              <span className="text-slate-500 dark:text-gray-400">Delete this comment?</span>
               <Button
                 size="sm"
                 onClick={() => deleteComment.mutate(comment.id)}
@@ -176,7 +176,7 @@ export function CommentItem({
                 ref={cancelRef}
                 type="button"
                 onClick={() => setConfirming(false)}
-                className="text-slate-400 hover:text-slate-700 underline"
+                className="text-slate-400 dark:text-gray-500 hover:text-slate-700 underline"
               >
                 Cancel
               </button>

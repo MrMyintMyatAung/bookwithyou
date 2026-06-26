@@ -42,7 +42,7 @@ export function ProgressBar({
     >
       <div
         className={cn(
-          "flex-1 rounded-full bg-slate-100 overflow-hidden",
+          "flex-1 rounded-full bg-slate-100 dark:bg-gray-800 overflow-hidden",
           barHeight
         )}
       >
@@ -62,7 +62,7 @@ export function ProgressBar({
         className={cn(
           "font-medium tabular-nums shrink-0 min-w-[4rem] text-right",
           textSize,
-          isComplete ? "text-teal-600" : "text-slate-500"
+          isComplete ? "text-teal-600 dark:text-teal-400" : "text-slate-500 dark:text-gray-400"
         )}
       >
         {isComplete ? (

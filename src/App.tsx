@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./hooks/useAuth";
+import { ThemeProvider } from "./hooks/useTheme";
 import { RootLayout } from "./components/layout/root-layout";
 import { HomePage } from "./pages/home";
 import { LoginPage } from "./pages/login";
@@ -27,6 +28,7 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
       <AuthProvider>
         <HashRouter>
           <Routes>
@@ -50,6 +52,7 @@ export default function App() {
           </Routes>
         </HashRouter>
       </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

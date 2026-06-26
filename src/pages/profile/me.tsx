@@ -25,7 +25,7 @@ function SessionLink({
         to={`/sessions/${id}`}
         className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-neutral-50 transition-colors group"
       >
-        <span className="text-sm font-medium text-neutral-800 group-hover:text-primary-700 transition-colors truncate">
+        <span className="text-sm font-medium text-neutral-800 dark:text-gray-200 group-hover:text-primary-700 transition-colors truncate">
           {title}
         </span>
         <span
@@ -50,7 +50,7 @@ function OwnProfileContent() {
   if (!profile) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center">
-        <Spinner className="h-8 w-8 text-primary-600" />
+        <Spinner className="h-8 w-8 text-primary-600 dark:text-primary-400" />
       </div>
     );
   }
@@ -83,7 +83,7 @@ function OwnProfileContent() {
 
         {/* Edit display name */}
         {editing ? (
-          <form onSubmit={handleSave} className="mt-6 pt-6 border-t border-neutral-100">
+          <form onSubmit={handleSave} className="mt-6 pt-6 border-t border-neutral-100 dark:border-gray-800">
             <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3">
               <div className="flex-1 w-full">
                 <Input
@@ -118,13 +118,13 @@ function OwnProfileContent() {
               </div>
             </div>
             {saveError && (
-              <p className="text-sm text-red-600 mt-2" role="alert">
+              <p className="text-sm text-red-600 dark:text-red-400 mt-2" role="alert">
                 {saveError}
               </p>
             )}
           </form>
         ) : (
-          <div className="mt-6 pt-6 border-t border-neutral-100">
+          <div className="mt-6 pt-6 border-t border-neutral-100 dark:border-gray-800">
             <Button
               variant="secondary"
               size="sm"
@@ -141,14 +141,14 @@ function OwnProfileContent() {
 
       {/* My sessions */}
       <Card className="p-6 sm:p-8">
-        <h2 className="text-lg font-bold text-neutral-900 mb-6">
+        <h2 className="text-lg font-bold text-neutral-900 dark:text-gray-100 mb-6">
           My Sessions
         </h2>
 
         {sessionsLoading ? (
           <div className="space-y-2 animate-pulse">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="h-10 bg-neutral-100 rounded-xl" />
+              <div key={i} className="h-10 bg-neutral-100 dark:bg-gray-800 rounded-xl" />
             ))}
           </div>
         ) : (
@@ -156,10 +156,10 @@ function OwnProfileContent() {
             {/* Hosting */}
             {mySessions?.hosted && mySessions.hosted.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-semibold text-neutral-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                   Hosting ({mySessions.hosted.length})
                 </h3>
-                <ul className="divide-y divide-neutral-100">
+                <ul className="divide-y divide-neutral-100 dark:divide-gray-800">
                   {mySessions.hosted.map((s: any) => (
                     <SessionLink
                       key={s.id}
@@ -175,10 +175,10 @@ function OwnProfileContent() {
             {/* Joined */}
             {mySessions?.joined && mySessions.joined.length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-semibold text-neutral-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                   Joined ({mySessions.joined.length})
                 </h3>
-                <ul className="divide-y divide-neutral-100">
+                <ul className="divide-y divide-neutral-100 dark:divide-gray-800">
                   {mySessions.joined.map((s: any) => (
                     <SessionLink
                       key={s.id}
@@ -196,7 +196,7 @@ function OwnProfileContent() {
                 mySessions.joined.length === 0)) && (
               <div className="text-center py-8">
                 <div className="text-3xl mb-3">📖</div>
-                <p className="text-sm text-neutral-500 mb-4">
+                <p className="text-sm text-neutral-500 dark:text-gray-400 mb-4">
                   You haven&apos;t joined any sessions yet.
                 </p>
                 <Link to="/sessions">
@@ -214,7 +214,7 @@ function OwnProfileContent() {
       <div className="mt-6 text-center">
         <Link
           to={`/profile/${profile.username}`}
-          className="text-sm text-primary-600 hover:text-primary-700 transition-colors"
+          className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 transition-colors"
         >
           View your public profile →
         </Link>
