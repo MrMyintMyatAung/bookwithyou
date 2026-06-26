@@ -39,7 +39,10 @@ export function SessionDetailPage() {
     user != null &&
     members != null &&
     members.some((m) => m.member.id === user.id);
-  const totalChapters = session?.book.total_chapters ?? 0;
+  const totalChapters = session?.book?.total_chapters ?? 0;
+  const bookTitle = session?.book?.title ?? "Unknown Book";
+  const bookAuthor = session?.book?.author ?? "Unknown Author";
+  const hostName = session?.host?.username ?? "unknown";
 
   // --- Loading ---
   if (sessionLoading) {
@@ -127,7 +130,7 @@ export function SessionDetailPage() {
             <p className="mt-2 text-slate-500">
               Hosted by{" "}
               <span className="font-medium text-slate-700">
-                {session.host.username}
+                {hostName}
               </span>
               {" · "}
               {members ? `${members.length} ${members.length === 1 ? "member" : "members"}` : "…"}
@@ -166,18 +169,18 @@ export function SessionDetailPage() {
           The Book
         </h2>
         <h3 className="text-xl font-bold text-navy-900">
-          {session.book.title}
+          {bookTitle}
         </h3>
-        <p className="text-slate-500 mt-1">by {session.book.author}</p>
+        <p className="text-slate-500 mt-1">by {bookAuthor}</p>
 
         {/* Chapters */}
         {(() => {
-          const chapters = session.book.chapters as unknown as string[];
+          const chapters = session.book?.chapters as unknown as string[] | undefined;
           if (!chapters || chapters.length === 0) return null;
           return (
             <div className="mt-5">
               <h4 className="text-sm font-medium text-slate-500 mb-2">
-                Chapters ({session.book.total_chapters})
+                Chapters ({totalChapters})
               </h4>
               <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1">
                 {chapters.map((chapter, i) => (

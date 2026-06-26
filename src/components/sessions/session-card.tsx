@@ -4,7 +4,7 @@ import { Card } from "../ui/card";
 import { STATUS_CLASSES } from "../../lib/constants";
 import type { SessionWithBook } from "../../hooks/useSessions";
 
-/** Generate a consistent hue from a book title for the cover gradient */
+/** Generate a consistent hue from a string for the cover gradient */
 function hashHue(str: string): number {
   let h = 0;
   for (let i = 0; i < str.length; i++) {
@@ -30,6 +30,13 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
     [session.id]
   );
 
+  // Guard against sessions with null book (RLS-filtered or deleted)
+  const bookTitle = session.book?.title ?? "Unknown Book";
+  const bookAuthor = session.book?.author ?? "Unknown Author";
+  const bookChapters = session.book?.total_chapters ?? 0;
+  const hostName = session.host?.username ?? "unknown";
+  const hue = hashHue(bookTitle);
+
   return (
     <Link to={`/sessions/${session.id}`} className="group block spotlight rounded-xl">
       <span className="spotlight-glow" aria-hidden="true" />
@@ -39,11 +46,11 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
           <div
             className="shrink-0 w-12 h-16 rounded-lg flex items-center justify-center text-sm font-black text-white shadow-sm"
             style={{
-              background: `linear-gradient(135deg, hsl(${hashHue(session.book.title)}, 60%, 55%), hsl(${(hashHue(session.book.title) + 40) % 360}, 50%, 40%))`,
+              background: `linear-gradient(135deg, hsl(${hue}, 60%, 55%), hsl(${(hue + 40) % 360}, 50%, 40%))`,
             }}
             aria-hidden="true"
           >
-            {session.book.title.charAt(0).toUpperCase()}
+            {bookTitle.charAt(0).toUpperCase()}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -77,15 +84,15 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
             </div>
 
             <div className="text-sm mb-4">
-              <p className="font-medium text-gray-300">{session.book.title}</p>
-              <p className="text-gray-500">by {session.book.author}</p>
+              <p className="font-medium text-gray-300">{bookTitle}</p>
+              <p className="text-gray-500">by {bookAuthor}</p>
             </div>
 
             <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
               <span>
                 Host:{" "}
                 <span className="font-medium text-gray-400">
-                  {session.host.username}
+                  {hostName}
                 </span>
               </span>
               <span className="inline-flex items-center gap-1">
@@ -98,8 +105,8 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-                {session.book.total_chapters}{" "}
-                {session.book.total_chapters === 1 ? "chapter" : "chapters"}
+                {bookChapters}{" "}
+                {bookChapters === 1 ? "chapter" : "chapters"}
               </span>
             </div>
           </div>
