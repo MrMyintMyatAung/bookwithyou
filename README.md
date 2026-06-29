@@ -1,26 +1,24 @@
 # BooksWithYou 📚
 
-> **BooksWithYou is a social reading tracker where friends create shared book sessions, log chapter progress together, and discuss in real time.**
-
-A social reading tracker where you can create reading sessions, invite friends, track chapter progress, and discuss books together.
+> **A social reading tracker where friends create shared book sessions, log progress together, and discuss in real time.**
 
 ## Features
 
-- **Create sessions** — pick a book, set chapters, choose public or private
+- **Create sessions** — pick a book, set chapters (manual or auto-generated) or total pages, choose public or private
 - **Join sessions** — browse public sessions or join via invite link
-- **Track progress** — log chapters completed with +/- controls
-- **Discuss** — post comments and react with emojis in real time
-- **Profiles** — upload avatars, edit your display name, view your sessions
+- **Track progress** — log chapters with +/- controls or enter your current page number
+- **Discuss** — threaded comments with inline replies and emoji reactions in real time
+- **Profiles** — upload avatars, edit your display name, view your sessions and bookshelf
 
 ## Screenshots
 
 <p align="center">
   <img src="screenshots/landing.png" alt="Landing page" width="400" />
-  <img src="screenshots/sessions.png" alt="Session list" width="400" />
+  <img src="screenshots/login.png" alt="Login page" width="400" />
 </p>
 <p align="center">
+  <img src="screenshots/sessions.png" alt="Session list" width="400" />
   <img src="screenshots/session-detail.png" alt="Session detail" width="400" />
-  <img src="screenshots/login.png" alt="Login" width="400" />
 </p>
 
 ## Tech Stack
@@ -34,6 +32,8 @@ A social reading tracker where you can create reading sessions, invite friends, 
 | Vite | 7 | Build tool & dev server |
 | Tailwind CSS | 4 | Styling |
 | TypeScript | 5.9 | Type safety |
+| Framer Motion | 12 | Animation library |
+| Supabase CLI | — | Local dev, migrations, types |
 
 ## Getting Started
 
@@ -55,10 +55,15 @@ A social reading tracker where you can create reading sessions, invite friends, 
 
 ### 3. Run database migrations
 
-1. In your Supabase dashboard, go to **SQL Editor**
-2. Open `supabase/migrations/20260619000000_initial_schema.sql` from this repo
-3. Paste the contents and click **Run**
-4. Repeat with `supabase/migrations/20260619000001_avatars_storage.sql`
+Run all SQL migration files in `supabase/migrations/` in order through the Supabase SQL Editor:
+
+1. `20260619000000_initial_schema.sql` — Core tables (profiles, books, sessions, memberships, progress, comments, reactions)
+2. `20260619000001_avatars_storage.sql` — Avatar storage bucket + policies
+3. `20260626000002_fix_books_rls.sql` — Books RLS fix
+4. `20260627000003_add_delete_policies.sql` — Session + book delete policies
+5. `20260627000004_bookshelf.sql` — Personal bookshelf
+6. `20260629000005_add_page_tracking.sql` — Page number tracking
+7. `20260629000006_add_comment_parent_id.sql` — Threaded comment replies
 
 ### 4. Install and run
 
