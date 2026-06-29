@@ -11,6 +11,7 @@ export interface ProgressWithMember {
   session_id: string;
   member_id: string;
   chapters_completed: number;
+  current_page: number | null;
   updated_at: string;
   member: ProfileBrief;
 }
@@ -29,6 +30,7 @@ export function useSessionProgress(sessionId: string | undefined) {
           session_id,
           member_id,
           chapters_completed,
+          current_page,
           updated_at,
           member:profiles!member_id(id, username, display_name, avatar_url)
         `
@@ -42,6 +44,7 @@ export function useSessionProgress(sessionId: string | undefined) {
         session_id: string;
         member_id: string;
         chapters_completed: number;
+        current_page: number | null;
         updated_at: string;
         member: ProfileBrief;
       }[];
@@ -113,6 +116,75 @@ export function useUpdateProgress() {
           session_id: sessionId,
           member_id: user.id,
           chapters_completed: chaptersCompleted,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "session_id, member_id" }
+      );
+
+      if (error) throw error;
+    },
+    onSuccess: (_data, { sessionId }) => {
+      queryClient.invalidateQueries({
+        queryKey: ["sessions", sessionId, "progress"],
+      });
+    },
+  });
+}
+
+export function useMyPageProgress(sessionId: string | undefined) {
+  const { user } = useAuth();
+
+  return useQuery({
+    queryKey: ["sessions", sessionId, "pageProgress", user?.id],
+    queryFn: async (): Promise<{
+      id: string;
+      current_page: number | null;
+    } | null> => {
+      if (!user) return null;
+
+      const { data, error } = await supabase
+        .from("progress")
+        .select("id, current_page")
+        .eq("session_id", sessionId!)
+        .eq("member_id", user.id)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!sessionId && !!user,
+    staleTime: 10_000,
+  });
+}
+
+export function useUpdatePageProgress() {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async ({
+      sessionId,
+      currentPage,
+      totalPages,
+    }: {
+      sessionId: string;
+      currentPage: number;
+      totalPages?: number;
+    }) => {
+      if (!user) throw new Error("You must be signed in to log progress.");
+
+      if (currentPage < 1) {
+        throw new Error("Page must be at least 1.");
+      }
+      if (totalPages !== undefined && currentPage > totalPages) {
+        throw new Error(`Cannot exceed ${totalPages} total pages.`);
+      }
+
+      const { error } = await supabase.from("progress").upsert(
+        {
+          session_id: sessionId,
+          member_id: user.id,
+          current_page: currentPage,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "session_id, member_id" }

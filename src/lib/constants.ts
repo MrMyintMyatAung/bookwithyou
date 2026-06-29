@@ -1,8 +1,8 @@
 import type { SessionStatus } from "../types/database";
 
 export const STATUS_CLASSES: Record<string, string> = {
-  active: "bg-emerald-100 text-emerald-800",
-  paused: "bg-amber-100 text-amber-800",
+  active: "bg-teal-100 text-teal-800",
+  paused: "bg-primary-100 text-primary-800",
   completed: "bg-neutral-100 text-neutral-600",
 };
 

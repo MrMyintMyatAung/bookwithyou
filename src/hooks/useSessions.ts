@@ -53,6 +53,7 @@ export interface CreateSessionInput {
   bookTitle: string;
   bookAuthor: string;
   chapters: string[];
+  totalPages?: number;
 }
 
 // --- Constants ---
@@ -173,13 +174,26 @@ export function useCreateSession() {
       if (!user) throw new Error("You must be signed in to create a session.");
 
       // 1. Insert the book
-      const { data: book, error: bookError } = await supabase
-        .from("books")
-        .insert({
+      const bookPayload: {
+          title: string;
+          author: string;
+          chapters: Json;
+          total_pages?: number | null;
+        } = {
           title: input.bookTitle,
           author: input.bookAuthor,
-          chapters: input.chapters as unknown as Json,
-        })
+          chapters: [],
+        };
+
+        if (input.totalPages) {
+          bookPayload.total_pages = input.totalPages;
+        } else {
+          bookPayload.chapters = input.chapters as unknown as Json;
+        }
+
+      const { data: book, error: bookError } = await supabase
+        .from("books")
+        .insert(bookPayload)
         .select()
         .single();
 

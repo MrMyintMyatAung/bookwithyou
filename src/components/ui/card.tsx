@@ -6,7 +6,7 @@ export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       className={cn(
-        "bg-white dark:bg-gray-900 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-sm",
+        "bg-white dark:bg-[#1e1b18] rounded-2xl border border-neutral-200 dark:border-neutral-700 shadow-sm",
         className
       )}
       {...props}

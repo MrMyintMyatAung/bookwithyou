@@ -22,8 +22,23 @@ export function CreateSessionForm() {
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [chaptersRaw, setChaptersRaw] = useState("");
+  const [chapterMode, setChapterMode] = useState<"manual" | "auto">("manual");
+  const [chapterCount, setChapterCount] = useState("");
+  const [totalPages, setTotalPages] = useState("");
+  const [trackingMode, setTrackingMode] = useState<"chapters" | "pages">("chapters");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState("");
+
+  function buildChapters(): string[] {
+    if (trackingMode === "chapters" && chapterMode === "auto") {
+      const count = parseInt(chapterCount, 10);
+      if (!isNaN(count) && count > 0) {
+        return Array.from({ length: count }, (_, i) => `Chapter ${i + 1}`);
+      }
+      return [];
+    }
+    return parseChapters(chaptersRaw);
+  }
 
   const validate = (): boolean => {
     const errors: Record<string, string> = {};
@@ -32,9 +47,20 @@ export function CreateSessionForm() {
     if (!bookTitle.trim()) errors.bookTitle = "Book title is required.";
     if (!bookAuthor.trim()) errors.bookAuthor = "Author name is required.";
 
-    const chapters = parseChapters(chaptersRaw);
-    if (chapters.length === 0) {
-      errors.chapters = "Add at least one chapter.";
+    if (trackingMode === "pages") {
+      const pages = parseInt(totalPages, 10);
+      if (!totalPages.trim() || isNaN(pages) || pages < 1) {
+        errors.totalPages = "Enter a valid number of pages.";
+      }
+    } else if (chapterMode === "auto") {
+      const count = parseInt(chapterCount, 10);
+      if (!chapterCount.trim() || isNaN(count) || count < 1) {
+        errors.chapterCount = "Enter a valid number of chapters.";
+      }
+    } else {
+      if (parseChapters(chaptersRaw).length === 0) {
+        errors.chapters = "Add at least one chapter.";
+      }
     }
 
     setFieldErrors(errors);
@@ -47,15 +73,14 @@ export function CreateSessionForm() {
 
     if (!validate()) return;
 
-    const chapters = parseChapters(chaptersRaw);
-
     createSession.mutate(
       {
         title: title.trim(),
         visibility,
         bookTitle: bookTitle.trim(),
         bookAuthor: bookAuthor.trim(),
-        chapters,
+        chapters: buildChapters(),
+        totalPages: trackingMode === "pages" ? parseInt(totalPages, 10) : undefined,
       },
       {
         onSuccess: (session) => {
@@ -166,44 +191,182 @@ export function CreateSessionForm() {
               required
             />
 
-            {/* Chapters */}
+            {/* Tracking mode */}
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="chapters"
-                className="text-sm font-medium text-slate-700 dark:text-gray-300"
-              >
-                Chapters
+              <label className="text-sm font-medium text-slate-700 dark:text-gray-300">
+                Track by
               </label>
-              <textarea
-                id="chapters"
-                value={chaptersRaw}
-                onChange={(e) => setChaptersRaw(e.target.value)}
-                placeholder={`Prologue\nCh. 1: The Beginning\nCh. 2: The Road Ahead`}
-                rows={6}
-                className={`px-3 py-2 rounded-xl border bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed resize-y ${
-                  fieldErrors.chapters
-                    ? "border-red-400 focus:ring-red-400 focus:border-red-400"
-                    : "border-slate-300 dark:border-gray-700"
-                }`}
-                aria-invalid={fieldErrors.chapters ? "true" : undefined}
-                aria-describedby={
-                  fieldErrors.chapters ? "chapters-error" : undefined
-                }
-              />
-              {fieldErrors.chapters ? (
-                <p
-                  id="chapters-error"
-                  className="text-sm text-red-600 dark:text-red-400"
-                  role="alert"
-                >
-                  {fieldErrors.chapters}
-                </p>
-              ) : (
-                <p className="text-xs text-slate-400 dark:text-gray-500">
-                  Enter one chapter per line. Add as many as you want.
-                </p>
-              )}
+              <div className="flex gap-3">
+                {(["chapters", "pages"] as const).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => {
+                      setTrackingMode(mode);
+                      setFieldErrors({});
+                    }}
+                    aria-pressed={trackingMode === mode}
+                    className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-xl border transition-all duration-200 ${
+                      trackingMode === mode
+                        ? "border-coral-300 bg-coral-50 dark:bg-coral-950/40 text-coral-600 dark:text-coral-400"
+                        : "border-slate-200 dark:border-gray-700 text-slate-500 dark:text-gray-400 hover:border-slate-300 hover:text-slate-700"
+                    }`}
+                  >
+                    {mode === "chapters" ? "Chapters" : "Pages"}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Chapters input */}
+            {trackingMode === "chapters" && (
+              <>
+                {/* Manual vs Auto toggle */}
+                <div className="flex gap-3">
+                  {(["manual", "auto"] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => {
+                        setChapterMode(mode);
+                        setFieldErrors({});
+                      }}
+                      aria-pressed={chapterMode === mode}
+                      className={`flex-1 px-4 py-2 text-sm font-medium rounded-xl border transition-all duration-200 ${
+                        chapterMode === mode
+                          ? "border-coral-300 bg-coral-50 dark:bg-coral-950/40 text-coral-600 dark:text-coral-400"
+                          : "border-slate-200 dark:border-gray-700 text-slate-500 dark:text-gray-400 hover:border-slate-300 hover:text-slate-700"
+                      }`}
+                    >
+                      {mode === "manual" ? "One per line" : "Auto-generate"}
+                    </button>
+                  ))}
+                </div>
+
+                {chapterMode === "manual" && (
+                  <div className="flex flex-col gap-1.5">
+                    <label
+                      htmlFor="chapters"
+                      className="text-sm font-medium text-slate-700 dark:text-gray-300"
+                    >
+                      Chapters
+                    </label>
+                    <textarea
+                      id="chapters"
+                      value={chaptersRaw}
+                      onChange={(e) => setChaptersRaw(e.target.value)}
+                      placeholder={`Prologue\nCh. 1: The Beginning\nCh. 2: The Road Ahead`}
+                      rows={6}
+                      className={`px-3 py-2 rounded-xl border bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed resize-y ${
+                        fieldErrors.chapters
+                          ? "border-red-400 focus:ring-red-400 focus:border-red-400"
+                          : "border-slate-300 dark:border-gray-700"
+                      }`}
+                      aria-invalid={fieldErrors.chapters ? "true" : undefined}
+                      aria-describedby={
+                        fieldErrors.chapters ? "chapters-error" : undefined
+                      }
+                    />
+                    {fieldErrors.chapters ? (
+                      <p
+                        id="chapters-error"
+                        className="text-sm text-red-600 dark:text-red-400"
+                        role="alert"
+                      >
+                        {fieldErrors.chapters}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-400 dark:text-gray-500">
+                        Enter one chapter per line. Add as many as you want.
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {chapterMode === "auto" && (
+                  <div className="flex flex-col gap-1.5">
+                    <label
+                      htmlFor="chapterCount"
+                      className="text-sm font-medium text-slate-700 dark:text-gray-300"
+                    >
+                      Number of Chapters
+                    </label>
+                    <input
+                      id="chapterCount"
+                      type="number"
+                      min={1}
+                      value={chapterCount}
+                      onChange={(e) => setChapterCount(e.target.value)}
+                      placeholder="e.g. 12"
+                      className={`px-3 py-2 rounded-xl border bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed ${
+                        fieldErrors.chapterCount
+                          ? "border-red-400 focus:ring-red-400 focus:border-red-400"
+                          : "border-slate-300 dark:border-gray-700"
+                      }`}
+                      aria-invalid={fieldErrors.chapterCount ? "true" : undefined}
+                      aria-describedby={
+                        fieldErrors.chapterCount ? "chapterCount-error" : undefined
+                      }
+                    />
+                    {fieldErrors.chapterCount ? (
+                      <p
+                        id="chapterCount-error"
+                        className="text-sm text-red-600 dark:text-red-400"
+                        role="alert"
+                      >
+                        {fieldErrors.chapterCount}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-400 dark:text-gray-500">
+                        Chapters will be created as "Chapter 1", "Chapter 2", etc.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Pages input */}
+            {trackingMode === "pages" && (
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="totalPages"
+                  className="text-sm font-medium text-slate-700 dark:text-gray-300"
+                >
+                  Total Pages
+                </label>
+                <input
+                  id="totalPages"
+                  type="number"
+                  min={1}
+                  value={totalPages}
+                  onChange={(e) => setTotalPages(e.target.value)}
+                  placeholder="e.g. 320"
+                  className={`px-3 py-2 rounded-xl border bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed ${
+                    fieldErrors.totalPages
+                      ? "border-red-400 focus:ring-red-400 focus:border-red-400"
+                      : "border-slate-300 dark:border-gray-700"
+                  }`}
+                  aria-invalid={fieldErrors.totalPages ? "true" : undefined}
+                  aria-describedby={
+                    fieldErrors.totalPages ? "totalPages-error" : undefined
+                  }
+                />
+                {fieldErrors.totalPages ? (
+                  <p
+                    id="totalPages-error"
+                    className="text-sm text-red-600 dark:text-red-400"
+                    role="alert"
+                  >
+                    {fieldErrors.totalPages}
+                  </p>
+                ) : (
+                  <p className="text-xs text-slate-400 dark:text-gray-500">
+                    The total number of pages in the book.
+                  </p>
+                )}
+              </div>
+            )}
           </fieldset>
 
           <Button

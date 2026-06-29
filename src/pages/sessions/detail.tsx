@@ -11,6 +11,7 @@ import { Button } from "../../components/ui/button";
 import { Avatar } from "../../components/ui/avatar";
 import { ProgressBar } from "../../components/sessions/progress-bar";
 import { ProgressLog } from "../../components/sessions/progress-log";
+import { PageTracker } from "../../components/sessions/page-tracker";
 import { CommentList } from "../../components/sessions/comment-list";
 
 export function SessionDetailPage() {
@@ -44,6 +45,8 @@ export function SessionDetailPage() {
     members != null &&
     members.some((m) => m.member.id === user.id);
   const totalChapters = session?.book?.total_chapters ?? 0;
+  const totalPages = session?.book?.total_pages ?? 0;
+  const isPageTracking = totalPages > 0;
   const bookTitle = session?.book?.title ?? "Unknown Book";
   const bookAuthor = session?.book?.author ?? "Unknown Author";
   const hostName = session?.host?.username ?? "unknown";
@@ -53,11 +56,11 @@ export function SessionDetailPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
         <div className="animate-pulse space-y-6">
-          <div className="h-8 bg-slate-200 dark:bg-gray-800 rounded w-2/3" />
-          <div className="h-4 bg-slate-100 dark:bg-gray-900 rounded w-1/2" />
-          <div className="h-48 bg-slate-100 dark:bg-gray-900 rounded-2xl" />
-          <div className="h-32 bg-slate-100 dark:bg-gray-900 rounded-2xl" />
-          <div className="h-48 bg-slate-100 dark:bg-gray-900 rounded-2xl" />
+          <div className="h-8 bg-white/[0.08] rounded w-2/3" />
+          <div className="h-4 bg-white/[0.06] rounded w-1/2" />
+          <div className="h-48 bg-white/[0.06] rounded-2xl" />
+          <div className="h-32 bg-white/[0.06] rounded-2xl" />
+          <div className="h-48 bg-white/[0.06] rounded-2xl" />
         </div>
       </div>
     );
@@ -106,9 +109,13 @@ export function SessionDetailPage() {
 
   // Build progress lookup by member_id
   const progressByMember = new Map<string, number>();
+  const pageProgressByMember = new Map<string, number>();
   if (progressRows) {
     for (const p of progressRows) {
       progressByMember.set(p.member_id, p.chapters_completed);
+      if (p.current_page != null) {
+        pageProgressByMember.set(p.member_id, p.current_page);
+      }
     }
   }
 
@@ -215,8 +222,17 @@ export function SessionDetailPage() {
         </h3>
         <p className="text-slate-500 dark:text-gray-400 mt-1">by {bookAuthor}</p>
 
+        {/* Pages */}
+        {isPageTracking && (
+          <div className="mt-5">
+            <p className="text-sm text-slate-500 dark:text-gray-400">
+              <span className="font-semibold">{totalPages}</span> pages
+            </p>
+          </div>
+        )}
+
         {/* Chapters */}
-        {(() => {
+        {!isPageTracking && (() => {
           const chapters = session.book?.chapters as unknown as string[] | undefined;
           if (!chapters || chapters.length === 0) return null;
           return (
@@ -252,10 +268,10 @@ export function SessionDetailPage() {
           <div className="space-y-3">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="flex items-center gap-3 animate-pulse">
-                <div className="h-9 w-9 bg-slate-200 dark:bg-gray-800 rounded-full" />
+                <div className="h-9 w-9 bg-white/[0.08] rounded-full" />
                 <div className="flex-1">
-                  <div className="h-4 bg-slate-100 dark:bg-gray-900 rounded w-28 mb-2" />
-                  <div className="h-2 bg-slate-100 dark:bg-gray-900 rounded w-full max-w-xs" />
+                  <div className="h-4 bg-white/[0.06] rounded w-28 mb-2" />
+                  <div className="h-2 bg-white/[0.06] rounded w-full max-w-xs" />
                 </div>
               </div>
             ))}
@@ -263,7 +279,9 @@ export function SessionDetailPage() {
         ) : members && members.length > 0 ? (
           <ul className="divide-y divide-slate-100 dark:divide-gray-800">
             {members.map((m) => {
-              const completed = progressByMember.get(m.member.id) ?? 0;
+              const completed = isPageTracking
+                ? (pageProgressByMember.get(m.member.id) ?? 0)
+                : (progressByMember.get(m.member.id) ?? 0);
               return (
                 <li
                   key={m.id}
@@ -291,12 +309,13 @@ export function SessionDetailPage() {
                       </p>
                     </div>
                   </div>
-                  {totalChapters > 0 && (
+                  {(totalChapters > 0 || totalPages > 0) && (
                     <ProgressBar
                       chaptersCompleted={completed}
-                      totalChapters={totalChapters}
+                      totalChapters={isPageTracking ? totalPages : totalChapters}
                       size="sm"
                       className="ml-12"
+                      labelUnit={isPageTracking ? "pages" : "chapters"}
                     />
                   )}
                 </li>
@@ -308,7 +327,15 @@ export function SessionDetailPage() {
         )}
 
         {/* My progress log */}
-        {isMember && totalChapters > 0 && (
+        {isMember && isPageTracking && (
+          <div className="mt-6 pt-4 border-t border-slate-100 dark:border-gray-800">
+            <PageTracker
+              sessionId={session.id}
+              totalPages={totalPages}
+            />
+          </div>
+        )}
+        {isMember && !isPageTracking && totalChapters > 0 && (
           <div className="mt-6 pt-4 border-t border-slate-100 dark:border-gray-800">
             <ProgressLog
               sessionId={session.id}

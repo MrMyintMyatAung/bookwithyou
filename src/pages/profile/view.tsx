@@ -27,13 +27,13 @@ export function MemberProfilePage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
         <div className="animate-pulse space-y-6">
           <div className="flex items-center gap-4 mb-8">
-            <div className="h-20 w-20 bg-neutral-200 dark:bg-gray-800 rounded-full" />
+            <div className="h-20 w-20 bg-white/[0.08] rounded-full" />
             <div className="space-y-2">
-              <div className="h-6 bg-neutral-200 dark:bg-gray-800 rounded w-40" />
-              <div className="h-4 bg-neutral-100 dark:bg-gray-900 rounded w-24" />
+              <div className="h-6 bg-white/[0.08] rounded w-40" />
+              <div className="h-4 bg-white/[0.06] rounded w-24" />
             </div>
           </div>
-          <div className="h-48 bg-neutral-100 dark:bg-gray-900 rounded-2xl" />
+          <div className="h-48 bg-white/[0.06] rounded-2xl" />
         </div>
       </div>
     );

@@ -33,14 +33,15 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
   // Guard against sessions with null book (RLS-filtered or deleted)
   const bookTitle = session.book?.title ?? "Unknown Book";
   const bookAuthor = session.book?.author ?? "Unknown Author";
-  const bookChapters = session.book?.total_chapters ?? 0;
+  const bookTotal = session.book?.total_pages ?? session.book?.total_chapters ?? 0;
+  const bookLabel = session.book?.total_pages ? "page" : "chapter";
   const hostName = session.host?.username ?? "unknown";
   const hue = hashHue(bookTitle);
 
   return (
     <Link to={`/sessions/${session.id}`} className="group block spotlight rounded-xl">
       <span className="spotlight-glow" aria-hidden="true" />
-      <Card className="p-6 h-full transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-coral-500/10 group-hover:border-amber-500/20">
+      <Card className="p-6 h-full transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary-500/10 group-hover:border-primary-500/20">
         <div className="flex gap-4">
           {/* Book cover thumbnail */}
           <div
@@ -55,7 +56,7 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-1 min-w-0 flex-1">
+              <h3 className="font-semibold text-white group-hover:text-primary-600 transition-colors line-clamp-1 min-w-0 flex-1">
                 {session.title}
               </h3>
               <div className="flex items-center gap-1 shrink-0">
@@ -67,7 +68,7 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="p-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-amber-500 hover:bg-amber-500/10 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
+                  className="p-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-primary-600 hover:bg-primary-500/10 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
                   aria-label={copied ? "Link copied!" : "Copy session link"}
                 >
                   {copied ? (
@@ -105,8 +106,8 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-                {bookChapters}{" "}
-                {bookChapters === 1 ? "chapter" : "chapters"}
+                {bookTotal}{" "}
+                {bookTotal === 1 ? bookLabel : `${bookLabel}s`}
               </span>
             </div>
           </div>

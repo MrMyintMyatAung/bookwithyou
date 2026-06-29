@@ -60,7 +60,7 @@ export function CommentList({
                 handleSubmit();
               }
             }}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-slate-900 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-slate-900 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           />
           {createComment.isError && (
             <p className="text-sm text-red-600 dark:text-red-400 mt-1">
@@ -130,7 +130,7 @@ export function CommentList({
       )}
 
       {!isLoading && !isError && comments && comments.length > 0 && (
-        <div className="divide-y divide-slate-100 dark:divide-gray-800">
+        <div>
           {comments.map((comment) => (
             <CommentItem
               key={comment.id}

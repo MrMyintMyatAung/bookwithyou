@@ -3,91 +3,99 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-accent-500: #f97316;
-  --color-accent-600: #ea580c;
+  /* Light cyan — primary brand color */
+  --color-accent-500: #0891b2;
+  --color-accent-600: #0e7490;
 
-  --color-primary-50: #fff7ed;
-  --color-primary-100: #ffedd5;
-  --color-primary-200: #fed7aa;
-  --color-primary-300: #fdba74;
-  --color-primary-400: #fb923c;
-  --color-primary-500: #f97316;
-  --color-primary-600: #ea580c;
-  --color-primary-700: #c2410c;
-  --color-primary-800: #9a3412;
-  --color-primary-900: #7c2d12;
+  --color-primary-50: #ecfeff;
+  --color-primary-100: #cffafe;
+  --color-primary-200: #a5f3fc;
+  --color-primary-300: #67e8f9;
+  --color-primary-400: #22d3ee;
+  --color-primary-500: #06b6d4;
+  --color-primary-600: #0891b2;
+  --color-primary-700: #0e7490;
+  --color-primary-800: #155e75;
+  --color-primary-900: #164e63;
 
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
+  /* Warm grays with brown undertones */
+  --color-neutral-50: #faf9f7;
+  --color-neutral-100: #f5f3f0;
+  --color-neutral-200: #e8e4de;
+  --color-neutral-300: #d4cec5;
+  --color-neutral-400: #a89f93;
+  --color-neutral-500: #7d7568;
+  --color-neutral-600: #5e574d;
+  --color-neutral-700: #433e37;
+  --color-neutral-800: #2a2723;
+  --color-neutral-900: #18161a;
 
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
+  /* Warm neutral (replaces cool blue) */
+  --color-brand-50: #faf8f5;
+  --color-brand-100: #f5f0eb;
+  --color-brand-200: #e8ddd3;
+  --color-brand-300: #d4c4b0;
+  --color-brand-400: #b8a089;
+  --color-brand-500: #9c826a;
+  --color-brand-600: #7c6550;
+  --color-brand-700: #5c4a3a;
+  --color-brand-800: #3d3128;
+  --color-brand-900: #1e1a15;
 
-  --color-navy-50: #f0f4f8;
-  --color-navy-100: #d9e2ec;
-  --color-navy-200: #bcccdc;
-  --color-navy-300: #9fb3c8;
-  --color-navy-400: #829ab1;
-  --color-navy-500: #627d98;
-  --color-navy-600: #486581;
-  --color-navy-700: #334e68;
-  --color-navy-800: #243b53;
-  --color-navy-900: #102a43;
+  /* Warm brown-gray (replaces cool navy) */
+  --color-navy-50: #faf8f5;
+  --color-navy-100: #f5f0eb;
+  --color-navy-200: #e8ddd3;
+  --color-navy-300: #d4c4b0;
+  --color-navy-400: #b8a089;
+  --color-navy-500: #9c826a;
+  --color-navy-600: #7c6550;
+  --color-navy-700: #5c4a3a;
+  --color-navy-800: #3d3128;
+  --color-navy-900: #1e1a15;
 
-  --color-coral-50: #fff7ed;
-  --color-coral-100: #ffedd5;
-  --color-coral-200: #fed7aa;
-  --color-coral-300: #fdba74;
-  --color-coral-400: #fb923c;
-  --color-coral-500: #f97316;
-  --color-coral-600: #ea580c;
-  --color-coral-700: #c2410c;
-  --color-coral-800: #9a3412;
-  --color-coral-900: #7c2d12;
+  /* Light cyan (remapped from coral for seamless migration) */
+  --color-coral-50: #ecfeff;
+  --color-coral-100: #cffafe;
+  --color-coral-200: #a5f3fc;
+  --color-coral-300: #67e8f9;
+  --color-coral-400: #22d3ee;
+  --color-coral-500: #06b6d4;
+  --color-coral-600: #0891b2;
+  --color-coral-700: #0e7490;
+  --color-coral-800: #155e75;
+  --color-coral-900: #164e63;
 
-  --color-teal-50: #f0fdfa;
-  --color-teal-100: #ccfbf1;
-  --color-teal-200: #99f6e4;
-  --color-teal-300: #5eead4;
-  --color-teal-400: #2dd4bf;
-  --color-teal-500: #14b8a6;
-  --color-teal-600: #0d9488;
-  --color-teal-700: #0f766e;
-  --color-teal-800: #115e59;
-  --color-teal-900: #134e4a;
+  /* Sage green (replaces cool teal) */
+  --color-teal-50: #f0fdf4;
+  --color-teal-100: #dcfce7;
+  --color-teal-200: #bbf7d0;
+  --color-teal-300: #86efac;
+  --color-teal-400: #4ade80;
+  --color-teal-500: #22c55e;
+  --color-teal-600: #16a34a;
+  --color-teal-700: #15803d;
+  --color-teal-800: #166534;
+  --color-teal-900: #14532d;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Lora", "Georgia", ui-serif, serif;
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
-    color: #1e293b;
-    background-color: #f8fafc;
+    color: #2a2723;
+    background-color: #faf8f5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   html.dark {
-    color: #e2e8f0;
-    background-color: #0a0a0f;
+    color: #e8e4de;
+    background-color: #18161a;
   }
 
   body {
@@ -117,11 +125,40 @@
   50% { transform: translate3d(8%, 4%, 0) scale(1.15); }
 }
 
+@keyframes liquid-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(6%, -4%) rotate(1deg); }
+  50% { transform: translate(-4%, 6%) rotate(-1deg); }
+  75% { transform: translate(4%, 2%) rotate(0.5deg); }
+}
+
+/* ─── Mesh gradient blob drifts ─── */
+@keyframes mesh-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(12%, 8%) scale(1.05); }
+  66% { transform: translate(-6%, 14%) scale(0.95); }
+}
+@keyframes mesh-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-10%, 12%) scale(1.08); }
+  66% { transform: translate(8%, -6%) scale(0.92); }
+}
+@keyframes mesh-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(14%, -10%) scale(0.96); }
+  66% { transform: translate(-8%, 8%) scale(1.06); }
+}
+@keyframes mesh-drift-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-12%, -8%) scale(1.04); }
+  66% { transform: translate(10%, 12%) scale(0.97); }
+}
+
 /* ─── Scroll reveal ─── */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.22, 0.68, 0.2, 1), transform 0.8s cubic-bezier(0.22, 0.68, 0.2, 1);
 }
 .reveal.visible {
   opacity: 1;
@@ -137,8 +174,15 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-coral-500);
+  color: var(--color-primary-500);
   width: 100%;
+}
+
+/* ─── Noise / film grain ─── */
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
 }
 
 /* ─── Spotlight card ─── */
@@ -153,7 +197,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
-  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(249, 115, 22, 0.12), transparent 60%);
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(6, 182, 212, 0.12), transparent 60%);
 }
 @media (hover: hover) and (pointer: fine) {
   .spotlight:hover .spotlight-glow {

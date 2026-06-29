@@ -17,6 +17,7 @@ export type Database = {
           id: string
           title: string
           total_chapters: number | null
+          total_pages: number | null
         }
         Insert: {
           author: string
@@ -25,6 +26,7 @@ export type Database = {
           id?: string
           title: string
           total_chapters?: number | null
+          total_pages?: number | null
         }
         Update: {
           author?: string
@@ -33,6 +35,7 @@ export type Database = {
           id?: string
           title?: string
           total_chapters?: number | null
+          total_pages?: number | null
         }
         Relationships: []
       }
@@ -77,6 +80,7 @@ export type Database = {
           body: string
           created_at: string | null
           id: string
+          parent_id: string | null
           session_id: string
           updated_at: string | null
         }
@@ -85,6 +89,7 @@ export type Database = {
           body: string
           created_at?: string | null
           id?: string
+          parent_id?: string | null
           session_id: string
           updated_at?: string | null
         }
@@ -93,6 +98,7 @@ export type Database = {
           body?: string
           created_at?: string | null
           id?: string
+          parent_id?: string | null
           session_id?: string
           updated_at?: string | null
         }
@@ -102,6 +108,13 @@ export type Database = {
             columns: ["author_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
             referencedColumns: ["id"]
           },
           {
@@ -176,6 +189,7 @@ export type Database = {
       progress: {
         Row: {
           chapters_completed: number
+          current_page: number | null
           id: string
           member_id: string
           session_id: string
@@ -183,6 +197,7 @@ export type Database = {
         }
         Insert: {
           chapters_completed?: number
+          current_page?: number | null
           id?: string
           member_id: string
           session_id: string
@@ -190,6 +205,7 @@ export type Database = {
         }
         Update: {
           chapters_completed?: number
+          current_page?: number | null
           id?: string
           member_id?: string
           session_id?: string

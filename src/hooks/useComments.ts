@@ -16,11 +16,13 @@ export interface CommentWithAuthor {
   id: string;
   session_id: string;
   author_id: string;
+  parent_id: string | null;
   body: string;
   created_at: string;
   updated_at: string;
   author: ProfileBrief;
   reactions: ReactionSummary[];
+  replies: CommentWithAuthor[];
 }
 
 interface RawReaction {
@@ -28,6 +30,29 @@ interface RawReaction {
   comment_id: string;
   member_id: string;
   emoji: string;
+}
+
+// --- Helpers ---
+
+function nestReplies(flat: CommentWithAuthor[]): CommentWithAuthor[] {
+  const idToComment = new Map<string, CommentWithAuthor>();
+  const roots: CommentWithAuthor[] = [];
+
+  for (const c of flat) {
+    c.replies = [];
+    idToComment.set(c.id, c);
+  }
+
+  for (const c of flat) {
+    if (c.parent_id) {
+      const parent = idToComment.get(c.parent_id);
+      if (parent) parent.replies.push(c);
+    } else {
+      roots.push(c);
+    }
+  }
+
+  return roots;
 }
 
 // --- Queries ---
@@ -87,18 +112,24 @@ export function useSessionComments(
         reactionMap.set(r.comment_id, existing);
       }
 
-      return (comments as unknown as {
+      const raw = comments as unknown as {
         id: string;
         session_id: string;
         author_id: string;
+        parent_id: string | null;
         body: string;
         created_at: string;
         updated_at: string;
         author: ProfileBrief;
-      }[]).map((c) => ({
+      }[];
+
+      const flat: CommentWithAuthor[] = raw.map((c) => ({
         ...c,
         reactions: reactionMap.get(c.id) || [],
+        replies: [],
       }));
+
+      return nestReplies(flat);
     },
     enabled: !!sessionId,
     staleTime: 5_000,
@@ -124,6 +155,39 @@ export function useCreateComment() {
       const { error } = await supabase.from("comments").insert({
         session_id: sessionId,
         author_id: user.id,
+        body,
+      });
+
+      if (error) throw error;
+    },
+    onSuccess: (_data, { sessionId }) => {
+      queryClient.invalidateQueries({
+        queryKey: ["sessions", sessionId, "comments"],
+      });
+    },
+  });
+}
+
+export function useCreateReply() {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async ({
+      sessionId,
+      parentId,
+      body,
+    }: {
+      sessionId: string;
+      parentId: string;
+      body: string;
+    }) => {
+      if (!user) throw new Error("You must be signed in to reply.");
+
+      const { error } = await supabase.from("comments").insert({
+        session_id: sessionId,
+        author_id: user.id,
+        parent_id: parentId,
         body,
       });
 

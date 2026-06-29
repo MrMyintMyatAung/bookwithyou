@@ -6,6 +6,8 @@ interface ProgressBarProps {
   totalChapters: number;
   size?: "sm" | "md";
   className?: string;
+  /** Unit label — "chapters" or "pages". Defaults to "chapters". */
+  labelUnit?: "chapters" | "pages";
 }
 
 export function ProgressBar({
@@ -13,6 +15,7 @@ export function ProgressBar({
   totalChapters,
   size = "md",
   className,
+  labelUnit = "chapters",
 }: ProgressBarProps) {
   const pct =
     totalChapters > 0
@@ -38,11 +41,11 @@ export function ProgressBar({
       aria-valuenow={chaptersCompleted}
       aria-valuemin={0}
       aria-valuemax={totalChapters}
-      aria-label={`${chaptersCompleted} of ${totalChapters} chapters completed`}
+      aria-label={`${chaptersCompleted} of ${totalChapters} ${labelUnit} completed`}
     >
       <div
         className={cn(
-          "flex-1 rounded-full bg-slate-100 dark:bg-gray-800 overflow-hidden",
+          "flex-1 rounded-full bg-neutral-200 dark:bg-gray-800 overflow-hidden",
           barHeight
         )}
       >
@@ -52,8 +55,8 @@ export function ProgressBar({
             isComplete
               ? "bg-teal-500"
               : isEmpty
-                ? "bg-slate-200"
-                : "bg-coral-500"
+                ? "bg-slate-200 dark:bg-gray-700"
+                : "bg-primary-500"
           )}
           style={{ width: mounted ? `${Math.max(pct, isEmpty ? 0 : 4)}%` : "0%" }}
         />
@@ -83,6 +86,8 @@ export function ProgressBar({
             </svg>
             Done!
           </span>
+        ) : labelUnit === "pages" ? (
+          `Page ${chaptersCompleted} of ${totalChapters}`
         ) : (
           `${chaptersCompleted} of ${totalChapters}`
         )}
