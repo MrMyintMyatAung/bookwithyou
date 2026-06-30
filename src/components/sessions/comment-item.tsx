@@ -94,12 +94,12 @@ export function CommentItem({
 
   if (deleteComment.isPending) {
     return (
-      <div className="py-4 first:pt-0 last:pb-0 border-b border-white/[0.06] last:border-0 opacity-60">
+      <div className="py-4 first:pt-0 last:pb-0 border-b border-slate-100 dark:border-white/[0.06] last:border-0 opacity-60">
         <div className="flex gap-3">
-          <div className="h-8 w-8 rounded-full bg-white/[0.08] shrink-0 mt-0.5 animate-pulse" />
+          <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-white/[0.08] shrink-0 mt-0.5 animate-pulse" />
           <div className="flex-1 space-y-2 animate-pulse">
-            <div className="h-4 bg-white/[0.06] rounded w-24" />
-            <div className="h-4 bg-white/[0.06] rounded w-full" />
+            <div className="h-4 bg-slate-200 dark:bg-white/[0.06] rounded w-24" />
+            <div className="h-4 bg-slate-200 dark:bg-white/[0.06] rounded w-full" />
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ export function CommentItem({
 
   return (
     <div>
-      <div className="group py-4 first:pt-0 last:pb-0 border-b border-white/[0.06] last:border-0"
+      <div className="group py-4 first:pt-0 last:pb-0 border-b border-slate-100 dark:border-white/[0.06] last:border-0"
            style={{ marginLeft: maxDepth * 24 }}>
         <div className="flex gap-3">
           <div className="mt-0.5">

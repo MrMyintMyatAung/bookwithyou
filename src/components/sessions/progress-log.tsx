@@ -13,7 +13,7 @@ export function ProgressLog({ sessionId, totalChapters }: ProgressLogProps) {
   const chaptersCompleted = myProgress?.chapters_completed ?? 0;
 
   return (
-    <div className="flex flex-col xs:flex-row xs:items-center gap-2">
+    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
       <span className="text-sm text-slate-600 dark:text-gray-300">Your progress:</span>
       <div className="flex items-center gap-1 flex-wrap">
         <Button

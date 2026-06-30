@@ -30,6 +30,15 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
     [session.id]
   );
 
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+      e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+    },
+    []
+  );
+
   // Guard against sessions with null book (RLS-filtered or deleted)
   const bookTitle = session.book?.title ?? "Unknown Book";
   const bookAuthor = session.book?.author ?? "Unknown Author";
@@ -39,7 +48,7 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
   const hue = hashHue(bookTitle);
 
   return (
-    <Link to={`/sessions/${session.id}`} className="group block spotlight rounded-xl">
+    <Link to={`/sessions/${session.id}`} className="group block spotlight rounded-xl" onMouseMove={handleMouseMove}>
       <span className="spotlight-glow" aria-hidden="true" />
       <Card className="p-6 h-full transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-primary-500/10 group-hover:border-primary-500/20">
         <div className="flex gap-4">
@@ -56,7 +65,7 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="font-semibold text-white group-hover:text-primary-600 transition-colors line-clamp-1 min-w-0 flex-1">
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-primary-600 transition-colors line-clamp-1 min-w-0 flex-1">
                 {session.title}
               </h3>
               <div className="flex items-center gap-1 shrink-0">
@@ -68,7 +77,7 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="p-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-primary-600 hover:bg-primary-500/10 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
+                  className="p-1 rounded-lg text-slate-400 dark:text-gray-400 hover:text-primary-600 hover:bg-primary-500/10 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
                   aria-label={copied ? "Link copied!" : "Copy session link"}
                 >
                   {copied ? (
@@ -85,14 +94,14 @@ export function SessionCard({ session }: { session: SessionWithBook }) {
             </div>
 
             <div className="text-sm mb-4">
-              <p className="font-medium text-gray-300">{bookTitle}</p>
-              <p className="text-gray-500 dark:text-gray-400">by {bookAuthor}</p>
+              <p className="font-medium text-slate-700 dark:text-gray-300">{bookTitle}</p>
+              <p className="text-slate-500 dark:text-gray-400">by {bookAuthor}</p>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mt-auto">
+            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mt-auto">
               <span>
                 Host:{" "}
-                <span className="font-medium text-gray-400">
+                <span className="font-medium text-slate-600 dark:text-gray-400">
                   {hostName}
                 </span>
               </span>
