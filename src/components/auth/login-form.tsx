@@ -64,7 +64,7 @@ export function LoginForm() {
       type: "signup",
       email: resendingTo,
       options: {
-        emailRedirectTo: `${window.location.origin}/bookwithyou/#/confirmed`,
+        emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}#/confirmed`,
       },
     });
 

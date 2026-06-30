@@ -20,7 +20,7 @@ export function ForgotPasswordCard() {
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       email.trim(),
       {
-        redirectTo: `${window.location.origin}/bookwithyou/#/reset-password`,
+        redirectTo: `${window.location.origin}${import.meta.env.BASE_URL}#/reset-password`,
       }
     );
 
